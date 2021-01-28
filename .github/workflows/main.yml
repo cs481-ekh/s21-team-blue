@@ -1,0 +1,10 @@
+name: Build
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # TODO add things that need to be installed to: - uses:
+      - run: bash build.sh
