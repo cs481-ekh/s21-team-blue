@@ -7,6 +7,6 @@ assignees: ''
 
 ---
 
-References heigh-level task #TBDUserStoryID
+References high-level task #TBDUserStoryID
 
 TBDTaskDetails
