@@ -7,4 +7,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # TODO add things that need to be installed to: - uses:
-      - run: bash build.sh
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+
+      - name: Install and build Angular App
+      - run: | 
+      cd web-app
+      npm ci
+      npm run-script build
+      cd ..
+      bash build.sh
