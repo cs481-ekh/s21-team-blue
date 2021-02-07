@@ -22,3 +22,11 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
       - run: npm run build --if-present
+  
+  build-sh:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Run build script
+        run: ./build.sh
+        shell: bash
