@@ -4,18 +4,21 @@ on: [push]
 
 jobs:
   build:
+    
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./web-app
+        
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x, 14.x, 15.x]
+    
     steps:
-      # TODO add things that need to be installed to: - uses:
-      - name: Use Node.js 14.x
+      - uses: actions/checkout@v2
+      - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 14.x
-
-      - name: Install and build Angular App
-      - run: | 
-      cd web-app
-      npm ci
-      npm run-script build
-      cd ..
-      bash build.sh
+          node-version: ${{ matrix.node-version }}
+      - run: npm ci
+      - run: npm run build --if-present
