@@ -1,2 +1,5 @@
 #!/bin/bash
-exit 0
+
+# controller 'building'
+pylint3 controller/main.py
+
