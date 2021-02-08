@@ -1,0 +1,11 @@
+<div class="wrapper">
+    <div class="os-selection">
+        <p *ngIf="selectedOS != null; else notFoundBlock">We detected that your Operating System is <span style="font-weight: bolder; color:#2196F3"> {{selectedOS.name}}</span>. If this is correct, click Continue. Otherwise, click Choose My OS and select your OS</p>
+        <button pButton pRipple class="p-button-outlined" label="Choose My OS" onClick=""></button>
+        <ng-template #notFoundBlock>
+            <p>We were unable to detect your Operating System version. Please choose your Operating System from the dropdown below, then click Continue</p>
+            <p-dropdown [options]="operatingSystems" [(ngModel)]="selectedOS" optionLabel="name"></p-dropdown>
+        </ng-template>
+        <button pButton pRipple type="button" label="Continue"></button>
+    </div>
+</div>

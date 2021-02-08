@@ -1,13 +1,18 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SetupMainComponent } from './setup-main/setup-main.component';
+import { SetupNewUserComponent } from './setup-new-user/setup-new-user.component';
 
 
 export const routes: Routes = [
 
     {
         path: '',
-        component: SetupMainComponent
+        component: SetupMainComponent,
+    },
+    {
+        path: 'new-user',
+        component: SetupNewUserComponent
     }
 ];
 
