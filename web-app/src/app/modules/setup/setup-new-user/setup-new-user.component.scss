@@ -1,0 +1,24 @@
+.wrapper {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.os-selection {
+    left: 500px;
+    top: 20%;
+    width: 500px;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.os-selection button {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}

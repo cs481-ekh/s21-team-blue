@@ -4,13 +4,13 @@
 <div class="content">
     <div class="new-client">
         <p>If you have NEVER used PiRate on this device...</p>
-        <button pButton pRipple type="button" label="Click Here" class="p-button-outlined"></button>
+        <button pButton pRipple type="button" label="Click Here" [routerLink]="['/setup/new-user']"></button>
     </div>
     <div class="returning-client">
         <p>If you HAVE used PiRate on this device, upload the save file that PiRate uses.</p>
         <form action="">
             <input type="file"/>
-            <button pButton pRipple type="button" label="Go!" disabled="true" class="p-button-outlined"></button>
+            <button pButton pRipple type="button" label="Go!" disabled="true"></button>
             <!-- Enable after directory specified -->
         </form>
     </div>
