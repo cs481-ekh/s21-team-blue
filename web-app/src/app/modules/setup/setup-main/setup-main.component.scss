@@ -74,9 +74,22 @@ form input {
  }
 
  @media screen and (max-width: 800px) {
+
+    form input {
+        margin: 0px 0px 0px 0px;
+        text-align: center;
+    }
+
+    form button {
+        align-self: center;
+        height: 50px;
+        width: 80px;
+        font-size: 12px
+    }
+
     .new-client, .returning-client {
        font-size: 12px;
-       width: 250px;
-       height: 150px;
+       width: 300px;
+       height: 250px;
     }
  }
