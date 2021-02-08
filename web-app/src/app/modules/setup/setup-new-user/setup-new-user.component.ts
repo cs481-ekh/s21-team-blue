@@ -19,10 +19,12 @@ export class SetupNewUserComponent implements OnInit {
   operatingSystems: OperatingSystem[] = [
     { name: 'Windows 10', value: 'windows-10' },
     { name: 'Ubuntu 20.04', value: 'ubuntu-20-04' },
-    { name: 'MacOS Big Sur', value: 'mac-big-sur' }
   ]
 
   selectedOS: OperatingSystem;
+
+  selectOS: boolean = true;
+  found: boolean = true;
 
   deviceInfo: DeviceInfo;
   
@@ -37,12 +39,16 @@ export class SetupNewUserComponent implements OnInit {
     this.operatingSystems.forEach(os => {
       if(os.value == this.os_version) {
         this.selectedOS = os;
+        this.selectOS = false;
       }
-    })
-
-    if(this.os_version == this.operatingSystems[0].value) 
-    {
-
+    });
+    if(this.selectOS == true) {
+      this.found = false;
     }
   }
+
+  select(): void {
+    this.selectOS = true;
+  }
+
 }
