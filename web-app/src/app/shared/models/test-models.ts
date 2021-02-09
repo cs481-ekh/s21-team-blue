@@ -4,3 +4,12 @@ export interface TestResults {
     result_date: Date,
     result_value: String
 }
+
+export interface Test {
+    test_id: String,
+    test_name: String,
+    test_description: String,
+    test_history: TestResults[],
+    operating_systems: String,
+    api_path: String
+}
