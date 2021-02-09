@@ -1,0 +1,54 @@
+<div class="wrapper">
+    <div class="test-area">
+
+        <!-- Main test list -->
+        <div class="test-list" *ngIf="!testsRun && !loading">
+            <p-table [value]="tests"
+            [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [paginator]="true"
+            [(selection)]="selectedTests" dataKey="test_id" styleClass="p-datatable-tests"
+            [filterDelay]="0" [rows]="10" [rowHover]="true">
+                <ng-template pTemplate="caption">
+                    <div class="table-header">
+                        Available Tests
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Operating Systems</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-test>
+                    <tr>
+                        <td>
+                            <!-- Disable if OS doesn't match -->
+                            <p-tableCheckbox [value]="test"></p-tableCheckbox>
+                        </td>
+                        <td>{{test.test_id}}</td>
+                        <td>{{test.test_name}}</td>
+                        <td>{{test.test_description}}</td>
+                        <td>{{test.operating_systems}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            <button style="float: right; margin-top: 5px;" pButton pRipple type="button" label="Run Selected Tests" (click)="runTests()"></button>
+        </div>
+
+        <!-- Loading screen while tests are running -->
+        <div class="loading-screen" *ngIf="loading">
+            <h5>Loading...</h5>
+            <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner" strokeWidth="5" animationDuration=".9s"></p-progressSpinner>
+            <button pButton label="View Results" (click)="doneLoadingTest()"></button>
+        </div>
+
+        <!-- Test results page after tests are run -->
+        <div class="test-results" *ngIf="testsRun && !loading">
+            <p>Tests Run Successfully</p>
+        </div>
+    </div>
+</div>
