@@ -1,0 +1,13 @@
+<div class="wrapper">
+    <div class="os-selection">
+        <div *ngIf="selectedOS != null && !selectOS">
+            <p style="margin-bottom: 0px;">We detected that your Operating System is <span style="font-weight: bolder; color:#2196F3"> {{selectedOS.name}}</span>. If this is correct, click Continue. Otherwise, click Choose My OS.</p>
+            <button pButton pRipple class="p-button-outlined" label="Choose My OS" (click)="select()"></button>
+        </div>
+        <p *ngIf="!found">We were unable to detect your Operating System version. Please choose your Operating System from the dropdown below, then click Continue</p>
+        <p *ngIf="selectedOS != null && selectOS && found">Select your Operating System</p> 
+        <p-dropdown *ngIf="selectOS" [options]="operatingSystems" placeholder="Select your OS" [(ngModel)]="selectedOS" optionLabel="name"></p-dropdown>
+        <!-- <i class="pi pi-info-circle"> The dropdown above contains all of the currently supported Operating Systems</i> -->
+        <button pButton pRipple type="button" label="Continue" [disabled]="selectedOS == null" [routerLink]="['/main']"></button>
+    </div>
+</div>
