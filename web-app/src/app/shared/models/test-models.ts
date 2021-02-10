@@ -1,15 +1,16 @@
 export interface TestResults {
-    result_test_id: String,
-    result_description: String,
-    result_date: Date,
-    result_value: String
+    result_id: string,
+    result_test: Test,
+    result_description: string,
+    result_date: string,
+    result_value: string
 }
 
 export interface Test {
-    test_id: String,
-    test_name: String,
-    test_description: String,
+    test_id: string,
+    test_name: string,
+    test_description: string,
     test_history: TestResults[],
-    operating_systems: String,
-    api_path: String
+    operating_systems: string,
+    api_path: string
 }

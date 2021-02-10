@@ -10,8 +10,18 @@ const routes: Routes = [
   {
     path: 'setup',
     loadChildren: () =>
-          import('./modules/setup/setup.module').then(m => m.SetupModule)
-  }
+      import('./modules/setup/setup.module').then(m => m.SetupModule)
+  },
+  {
+    path: 'main',
+    loadChildren: () =>
+      import('./modules/testing/testing.module').then(m => m.TestingModule)
+  },
+  // {
+  //   path: '**',
+  //   redirectTo: '404',
+  //   component: PageNotFoundComponent
+  // }
 ];
 
 @NgModule({

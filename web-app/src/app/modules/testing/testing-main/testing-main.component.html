@@ -1,0 +1,82 @@
+<div class="wrapper">
+    <div class="test-area">
+
+        <!-- Main test list -->
+        <div class="test-list" *ngIf="testsView">
+            <p-table [value]="tests"
+            [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [paginator]="true"
+            [(selection)]="selectedTests" dataKey="test_id" styleClass="p-datatable-tests"
+            [filterDelay]="0" [rows]="10" [rowHover]="true">
+                <ng-template pTemplate="caption">
+                    <div class="table-header">
+                        Available Tests
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Operating Systems</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-test>
+                    <tr>
+                        <td>
+                            <!-- Disable if OS isn't compatible -->
+                            <p-tableCheckbox [value]="test"></p-tableCheckbox>
+                        </td>
+                        <td>{{test.test_id}}</td>
+                        <td>{{test.test_name}}</td>
+                        <td>{{test.test_description}}</td>
+                        <td>{{test.operating_systems}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            <button *ngIf="testsRun" style="margin-top: 5px;" pButton pRipple type="button" label="View Last Test Results" (click)="resultView()"></button>
+            <button style="float: right; margin-top: 5px;" pButton pRipple type="button" label="Run Selected Tests" (click)="runTests()"></button>
+        </div>
+
+        <!-- Loading screen while tests are running -->
+        <div class="loading-screen" *ngIf="loadingView">
+            <h2>Running Tests...</h2>
+            <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner" strokeWidth="5" animationDuration=".9s" (click)="doneLoadingTest()"></p-progressSpinner>
+        </div>
+
+        <!-- Test results displayed after tests are run -->
+        <div class="test-results" *ngIf="resultsView">
+            <p-table [value]="testResults"
+            [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [paginator]="true"
+            dataKey="result_test_id" styleClass="p-datatable-tests"
+            [filterDelay]="0" [rows]="10" [rowHover]="true">
+                <ng-template pTemplate="caption">
+                    <div class="table-header">
+                        Test Results
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Date Executed</th>
+                        <th>Status</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-result>
+                    <!-- Make row clickable so they can view more detailed info about the test results -->
+                    <!-- <tr (click)="resultPopup(result)>" -->
+                    <tr>
+                        <td>{{result.result_id}}</td>
+                        <td>{{result.result_test.test_name}}</td>
+                        <td>{{result.result_date}}</td>
+                        <td>{{result.result_value}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            <button style="float: right; margin-top: 5px;" pButton pRipple type="button" label="Return to test selection" (click)="testView()"></button>
+        </div>
+    </div>
+</div>
