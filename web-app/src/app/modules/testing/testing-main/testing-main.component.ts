@@ -11,8 +11,10 @@ export class TestingMainComponent implements OnInit {
   tests: Test[];
   selectedTests: Test[];
   testResults: TestResults[];
+  testsView: boolean = true;
+  resultsView: boolean = false;
   testsRun: boolean = false;
-  loading: boolean = false;
+  loadingView: boolean = false;
 
   constructor() { }
 
@@ -437,19 +439,22 @@ export class TestingMainComponent implements OnInit {
   fillTestResults(): void {
     this.testResults = [
       {
-        result_test_id: '1',
+        result_id: '1',
+        result_test: this.tests[0],
         result_description: 'result1 description',
         result_date: '2020-01-07',
         result_value: 'Failed'
       },
       {
-        result_test_id: '2',
+        result_id: '2',
+        result_test: this.tests[1],
         result_description: 'result2 description',
         result_date: '2020-02-07',
         result_value: 'Failed'
       },
       {
-        result_test_id: '2',
+        result_id: '3',
+        result_test: this.tests[1],
         result_description: 'result3 description',
         result_date: '2020-02-07',
         result_value: 'Success'
@@ -464,12 +469,45 @@ export class TestingMainComponent implements OnInit {
     //executeSelected(this.selectedTests);
     
     // Flip the screen to show results
-    this.loading = true;
+    this.testsView = false;
+    this.loadingView = true;
   }
 
+  /**
+   * Return from the test results view to
+   * the test selection view
+   */
+  testView(): void {
+    this.resultsView = false;
+    this.testsView = true;
+  }
+
+  /**
+   * Return from the test selection view to
+   * the test results view
+   * 
+   */
+  resultView(): void {
+    this.testsView = false;
+    this.resultsView = true;
+  }
+
+  /**
+   * Display a more detailed description of the selected
+   * test results in the form of a popup
+   * @param res - the result to display
+   */
+  resultPopup(res: TestResults) {
+
+  }
+
+  /**
+   * Test method; used to display loading bar.
+   */
   doneLoadingTest(): void {
+    this.loadingView = false;
+    this.resultsView = true;
     this.testsRun = true;
-    this.loading = false;
   }
 
 }

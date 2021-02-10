@@ -1,5 +1,6 @@
 export interface TestResults {
-    result_test_id: string,
+    result_id: string,
+    result_test: Test,
     result_description: string,
     result_date: string,
     result_value: string
