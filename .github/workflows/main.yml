@@ -19,6 +19,10 @@ jobs:
       - name: Run build script
         run: ./build.sh
         shell: bash
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
       - name: Run test script
         run: ./test.sh
         shell: bash
