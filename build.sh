@@ -8,3 +8,8 @@ do
     pylint3 $pyfile
 done
 
+# Angular app build
+cd web-app
+npm ci
+npm run build --if-present
+cd # Return to root directory
