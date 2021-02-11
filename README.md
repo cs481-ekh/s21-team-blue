@@ -3,13 +3,13 @@ BSU CS481 Capstone project template
 
 ## Running Angular App
 ### Installation
-To run the Angular App locally, you need to install NodeJS, NPM, and the Angular CLI (Command-Line Interface). (Here)[https://nodejs.org/en/] is a link to download NodeJS, which also installs npm. 
+To run the Angular App locally, you need to install NodeJS, NPM, and the Angular CLI (Command-Line Interface). [Here](https://nodejs.org/en/) is a link to download NodeJS, which also installs npm. 
 
 Once NodeJS and npm are installed on your machine, open a terminal and run the following command (in any directory):
 `npm install -g @angular/cli`
 
 ### Execution
-Now that all 3 components are download, open a terminal and navigate to [this_project_root]/web-app. From here, run the following 2 commands:
+Now that all 3 components are download, open a terminal and navigate to `[this_project_root]/web-app`. From here, run the following 2 commands:
 
 `npm ci` (installs the required modules for the program)
 
