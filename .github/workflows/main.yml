@@ -19,3 +19,6 @@ jobs:
       - name: Run build script
         run: ./build.sh
         shell: bash
+      - name: Run test script
+        run: ./test.sh
+        shell: bash
