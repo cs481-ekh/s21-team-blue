@@ -16,4 +16,4 @@ Now that all 3 components are download, open a terminal and navigate to `[this_p
 `ng serve` (runs the program locally)
 
 ### Access
-To access the webpage, go to https://localhost:4200 in any web browser, and you should see the homepage.
+To access the webpage, go to http://localhost:4200 in any web browser, and you should see the homepage.
