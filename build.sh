@@ -1,6 +1,10 @@
 #!/bin/bash
 
-# controller 'building'
+# === linting for python controller ===
 sudo apt-get install pylint3 # note the CI container uses passwordless sudo
-pylint3 controller/main.py
+# run pylint3 on every .py file under ./controller
+for pyfile in `find ./controller/ -name '*.py'`
+do
+    pylint3 $pyfile
+done
 
