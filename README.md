@@ -1,3 +1,6 @@
+![example workflow file path](https://github.com/cs481-ekh/s21-team-blue/workflows/.github/workflows/main.yml/badge.svg)
+
+
 # PiRate
 BSU CS481 Capstone project template
 
