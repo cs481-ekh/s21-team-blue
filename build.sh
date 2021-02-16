@@ -13,3 +13,9 @@ cd web-app
 npm ci
 npm run build --if-present
 cd # Return to root directory
+
+# Node Express Server build
+cd backend
+npm ci
+npm run build --if-present
+cd
