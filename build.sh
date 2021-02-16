@@ -17,5 +17,5 @@ cd # Return to root directory
 # Node Express Server build
 cd backend
 npm ci
-npm run build --if-present
+npm start
 cd
