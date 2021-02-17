@@ -2,21 +2,27 @@
 
 
 # PiRate
-BSU CS481 Capstone project template
+BSU CS481 Capstone Project
 
-## Running Angular App
+## Running Angular App with Node Express
 ### Installation
-To run the Angular App locally, you need to install NodeJS, NPM, and the Angular CLI (Command-Line Interface). [Here](https://nodejs.org/en/) is a link to download NodeJS, which also installs npm. 
+To run the Angular App with the Node Express Server, you need to install NodeJS, NPM, and the Angular CLI (Command-Line Interface). [Here](https://nodejs.org/en/) is a link to download NodeJS, which also installs npm. 
 
 Once NodeJS and npm are installed on your machine, open a terminal and run the following command (in any directory):
 `npm install -g @angular/cli`
 
-### Execution
-Now that all 3 components are download, open a terminal and navigate to `[this_project_root]/web-app`. From here, run the following 2 commands:
+### Compiling the Angular App
+Now that all 3 components are download, open a terminal and navigate to `[this_project_root]/web-app`. From this directory, execute the following 2 commands:
 
-`npm ci` (installs the required modules for the program)
+`npm ci` (Installs the required modules for the program)
 
-`ng serve` (runs the program locally)
+`npm run pro-build` (Builds the production version of the Angular app, and stores the files in `./backend/dist/web-app`)
+
+### Running the Node Express Server
+To start the Node Express Server, navigate to `./backend/`. You should now see a directory called `/dist/web-app/` with the web app's production files that were just generated. From this directory, execute the following 2 commands:
+
+`npm ci` (Installs the required modules for the program)
+`npm start` (Starts the Node Express Server)
 
 ### Access
-To access the webpage, go to http://localhost:4200 in any web browser, and you should see the homepage.
+To access the website, navigate to `http://localhost:3000/` in your preferred browser.

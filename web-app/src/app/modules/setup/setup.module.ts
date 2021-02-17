@@ -5,7 +5,9 @@ import { SetupRoutingModule } from './setup.routing';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { TagModule } from 'primeng/tag';
-import { FormsModule } from '@angular/forms'
+import { FormsModule } from '@angular/forms';
+import {FileUploadModule} from 'primeng/fileupload';
+import {HttpClientModule} from '@angular/common/http';
 import { SetupNewUserComponent } from './setup-new-user/setup-new-user.component';
 
 @NgModule({
@@ -16,7 +18,9 @@ import { SetupNewUserComponent } from './setup-new-user/setup-new-user.component
     ButtonModule,
     DropdownModule,
     FormsModule,
-    TagModule
+    TagModule,
+    FileUploadModule,
+    HttpClientModule
   ]
 })
 export class SetupModule { }

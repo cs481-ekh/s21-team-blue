@@ -9,7 +9,7 @@
     <div class="returning-client">
         <p>If you HAVE used PiRate on this device, upload the save file that PiRate uses.</p>
         <form action="">
-            <input type="file"/>
+            <p-fileUpload #fubauto mode="basic" name="demo[]" url="./upload.php" accept="image/*" chooseLabel="Browse"></p-fileUpload>
             <button pButton pRipple type="button" label="Go!" disabled="true"></button>
             <!-- Enable after directory specified -->
         </form>
