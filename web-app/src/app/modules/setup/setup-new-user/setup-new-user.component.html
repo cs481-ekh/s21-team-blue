@@ -8,6 +8,6 @@
         <p *ngIf="selectedOS != null && selectOS && found">Select your Operating System</p> 
         <p-dropdown *ngIf="selectOS" [options]="operatingSystems" placeholder="Select your OS" [(ngModel)]="selectedOS" optionLabel="name"></p-dropdown>
         <!-- <i class="pi pi-info-circle"> The dropdown above contains all of the currently supported Operating Systems</i> -->
-        <button pButton pRipple type="button" label="Continue" [disabled]="selectedOS == null" [routerLink]="['/main']"></button>
+        <button pButton pRipple type="button" label="Continue" [disabled]="selectedOS == null" (click)="submitOSChoice(selectedOS)"></button>
     </div>
 </div>

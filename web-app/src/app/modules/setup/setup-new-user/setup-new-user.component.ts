@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { DeviceDetectorService, DeviceInfo } from 'ngx-device-detector';
-
-interface OperatingSystem {
-  name: string,
-  value: string
-}
+import { OperatingSystem } from 'src/app/shared/models/system-info-models';
+import { DataService } from 'src/app/shared/services/data.service';
 
 @Component({
   selector: 'app-setup-new-user',
@@ -12,30 +10,24 @@ interface OperatingSystem {
   styleUrls: ['./setup-new-user.component.scss']
 })
 
-
-
 export class SetupNewUserComponent implements OnInit {
 
-  operatingSystems: OperatingSystem[] = [
-    { name: 'Windows 10', value: 'windows-10' },
-    { name: 'Ubuntu 20.04', value: 'ubuntu-20-04' },
-  ]
+  constructor(private _dataService: DataService, 
+              private deviceDetector: DeviceDetectorService,
+              private router: Router) { }
 
+  operatingSystems: OperatingSystem[];
   selectedOS: OperatingSystem;
-
   selectOS: boolean = true;
   found: boolean = true;
-
   deviceInfo: DeviceInfo;
-  
   os_version: string = "";
 
-  constructor(private deviceDetector: DeviceDetectorService) { }
-
   ngOnInit(): void {
+    this.operatingSystems = this._dataService.getOSList();
     this.deviceInfo = this.deviceDetector.getDeviceInfo();
     this.os_version = this.deviceInfo.os_version;
- 
+
     this.operatingSystems.forEach(os => {
       if(os.value == this.os_version) {
         this.selectedOS = os;
@@ -49,6 +41,24 @@ export class SetupNewUserComponent implements OnInit {
 
   select(): void {
     this.selectOS = true;
+  }
+
+  /**
+   * Verify the OS selection of the user.
+   * @param selectedOS - The user's selected OS 
+   */
+  submitOSChoice(selectedOS: OperatingSystem): void {
+    this._dataService.setOS(selectedOS);
+    if(this.operatingSystems.find(os => {
+      os.name === selectedOS.name &&
+      os.value === selectedOS.value;}) || 
+    (!this.found && selectedOS !== null))
+    { 
+      this.router.parseUrl('/main');
+    }
+    else {
+      console.log("Error! Please choose a valid Operating System from the listed options");
+    }
   }
 
 }

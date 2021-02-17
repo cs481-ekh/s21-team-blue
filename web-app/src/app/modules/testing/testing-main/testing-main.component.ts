@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { OperatingSystem } from 'src/app/shared/models/system-info-models';
 import { TestResults, Test } from 'src/app/shared/models/test-models'; 
+import { DataService } from 'src/app/shared/services/data.service';
 
 @Component({
   selector: 'app-testing-main',
@@ -15,12 +17,14 @@ export class TestingMainComponent implements OnInit {
   resultsView: boolean = false;
   testsRun: boolean = false;
   loadingView: boolean = false;
+  os: OperatingSystem;
 
-  constructor() { }
+  constructor(private _dataService: DataService) { }
 
   ngOnInit(): void {
     this.fillTests();
     this.fillTestResults();
+    this.os = this._dataService.getOS();
   }
 
   fillTests(): void {
