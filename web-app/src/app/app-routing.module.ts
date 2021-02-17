@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
+import { RouteGuard } from './shared/guards/route-guard.guard';
 
 const routes: Routes = [
   {
@@ -15,6 +16,7 @@ const routes: Routes = [
   },
   {
     path: 'main',
+    canActivate: [RouteGuard],
     loadChildren: () =>
       import('./modules/testing/testing.module').then(m => m.TestingModule)
   },
