@@ -8,6 +8,7 @@ import { TagModule } from 'primeng/tag';
 import { FormsModule } from '@angular/forms';
 import {FileUploadModule} from 'primeng/fileupload';
 import {HttpClientModule} from '@angular/common/http';
+import {InputTextModule} from 'primeng/inputtext';
 import { SetupNewUserComponent } from './setup-new-user/setup-new-user.component';
 
 @NgModule({
@@ -20,7 +21,8 @@ import { SetupNewUserComponent } from './setup-new-user/setup-new-user.component
     FormsModule,
     TagModule,
     FileUploadModule,
-    HttpClientModule
+    HttpClientModule,
+    InputTextModule
   ]
 })
 export class SetupModule { }

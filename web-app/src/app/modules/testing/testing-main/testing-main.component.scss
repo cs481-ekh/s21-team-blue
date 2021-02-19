@@ -7,6 +7,17 @@
         align-items: center;
     }
 
+    .wrapper .settings-icon {
+        position: absolute;
+        left: 50px;
+        top: 50px;
+    }
+
+    .wrapper .settings-icon:hover {
+        color: #67bed3;
+        cursor: pointer;
+    }
+
     .test-area {
         margin-top: 300px;
         width: 700px;

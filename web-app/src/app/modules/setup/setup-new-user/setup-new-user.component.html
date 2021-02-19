@@ -5,9 +5,15 @@
             <button pButton pRipple class="p-button-outlined" label="Choose My OS" (click)="select()"></button>
         </div>
         <p *ngIf="!found">We were unable to detect your Operating System version. Please choose your Operating System from the dropdown below, then click Continue</p>
-        <p *ngIf="selectedOS != null && selectOS && found">Select your Operating System</p> 
-        <p-dropdown *ngIf="selectOS" [options]="operatingSystems" placeholder="Select your OS" [(ngModel)]="selectedOS" optionLabel="name"></p-dropdown>
-        <!-- <i class="pi pi-info-circle"> The dropdown above contains all of the currently supported Operating Systems</i> -->
-        <button pButton pRipple type="button" label="Continue" [disabled]="selectedOS == null" (click)="submitOSChoice(selectedOS)"></button>
+        <p *ngIf="selectedOS != null && selectOS && found && !showText">Select your Operating System</p>
+        <p-dropdown *ngIf="selectOS && !showText" [options]="operatingSystems" placeholder="Select your OS" [(ngModel)]="selectedOS" optionLabel="name"></p-dropdown>
+        <i *ngIf="selectOS && !showText" class="pi pi-info-circle" (click)="showTextBox()"> Click here if your operating system is not listed</i>
+        <div *ngIf="showText" class="p-field">
+            <p>Enter the name of your Operating System</p>
+            <label for="os">Operating System</label>
+            <input id="os" type="text" [(ngModel)]="os_text" aria-describedby="os-help" pInputText />
+            <i class="pi pi-angle-left" (click)="backToOSSelection()"> Back to OS Selection</i>
+        </div>
+        <button pButton pRipple type="button" label="Continue" [disabled]="selectedOS == null || (showText && os_text === '')" (click)="submitOSChoice(selectedOS)"></button>
     </div>
 </div>
