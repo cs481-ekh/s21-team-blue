@@ -6,7 +6,7 @@ import { RouteGuard } from './shared/guards/route-guard.guard';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'setup',
+    redirectTo: 'main',
     pathMatch: 'full'
   },
   {

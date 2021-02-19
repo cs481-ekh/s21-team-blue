@@ -1,0 +1,14 @@
+<div class="wrapper">
+    <i class="pi pi-home settings-icon" title="Home" [routerLink]="['/main']" style="font-size: 3rem;"></i>
+    <div class="os">
+        <p-toast position="top-center" key="tc"></p-toast>
+        <p>You've specified your Operating System to be: <span style="color: #5fb8ee">{{os.name}}</span>. If this is incorrect, you may change it now:</p>
+        
+        <p-dropdown *ngIf="!showText" [options]="os_list" placeholder="Select your OS" [(ngModel)]="selectedOS" optionLabel="name"></p-dropdown>
+        <i *ngIf="!showText" class="pi pi-angle-right" (click)="toggleTextBox()"> OS not listed? Click here.</i>
+        <input *ngIf="showText" id="os" type="text" [(ngModel)]="os_text" aria-describedby="os-help" pInputText />
+        <i *ngIf="showText" class="pi pi-angle-left" (click)="toggleTextBox()"> Back to OS Selection</i>
+        <!-- On submit, show a green toast message saying "OS Details Updated" -->
+        <button pButton pRipple type="button" label="Submit Change" [disabled]="(selectedOS === os && !showText) || (showText && os_text === '')" (click)="submitOSUpdate(selectedOS)"></button>
+    </div>
+</div>
