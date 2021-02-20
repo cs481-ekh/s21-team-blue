@@ -18,6 +18,7 @@ export class TestingMainComponent implements OnInit {
   testsRun: boolean = false;
   loadingView: boolean = false;
   os: OperatingSystem;
+  displayModal: boolean = false;
 
   constructor(private _dataService: DataService) { }
 
@@ -26,6 +27,10 @@ export class TestingMainComponent implements OnInit {
     this.fillTestResults();
     this.os = this._dataService.getOS();
   }
+
+  showModalDialog() {
+    this.displayModal = true;
+}
 
   fillTests(): void {
     this.tests = [

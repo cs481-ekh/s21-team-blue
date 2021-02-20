@@ -10,6 +10,7 @@ import {InputTextModule} from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
 import { SettingsComponent } from './settings/settings.component';
+import { DialogModule } from 'primeng/dialog';
 
 @NgModule({
   declarations: [TestingMainComponent, SettingsComponent],
@@ -22,7 +23,8 @@ import { SettingsComponent } from './settings/settings.component';
     DropdownModule,
     InputTextModule,
     FormsModule,
-    ToastModule
+    ToastModule,
+    DialogModule
   ]
 })
 export class TestingModule { }
