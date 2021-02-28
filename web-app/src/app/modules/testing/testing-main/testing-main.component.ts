@@ -25,7 +25,8 @@ export class TestingMainComponent implements OnInit {
   ngOnInit(): void {
     this.fillTests();
     this.fillTestResults();
-    this.os = this._dataService.getOS();
+    var possibleOS = this._dataService.getOS();
+    if(possibleOS !== null) this.os = possibleOS;
   }
 
   showModalDialog() {
