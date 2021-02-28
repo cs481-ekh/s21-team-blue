@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'; 
 import { Router } from '@angular/router';
 import { DeviceDetectorService, DeviceInfo } from 'ngx-device-detector';
-import { OperatingSystem } from 'src/app/shared/models/system-info-models';
+import { IpAddress, OperatingSystem } from 'src/app/shared/models/system-info-models';
 import { DataService } from 'src/app/shared/services/data.service';
 
 @Component({
@@ -16,28 +16,57 @@ export class SetupNewUserComponent implements OnInit {
               private deviceDetector: DeviceDetectorService,
               private router: Router) { }
 
-  operatingSystems: OperatingSystem[];
-  selectedOS: OperatingSystem;
-  selectOS: boolean = true;
-  showText: boolean = false;
-  found: boolean = true;
-  deviceInfo: DeviceInfo;
-  os_version: string = "";
-  os_text: string = "";
+  operatingSystems: OperatingSystem[]; // The set list of Operating Systems that PiRate has assured compatibility for
+  selectedOS: OperatingSystem; // The currently-selected OS
+  selectedIP: IpAddress; // The currently-selected IPv4 Address
+  selectOS: boolean = true; // Toggle for whether or not the OS user-selection view should be shown
+  showText: boolean = false; // Toggle for whether or not the OS text box should be shown
+  foundOS: boolean = true; // True if the OS was found automatically; false otherwise
+  foundIP: boolean = false; // True if the IP was found automatically; false otherwise
+  deviceInfo: DeviceInfo; // Finds information about the device (including the OS version)
+  os_version: string = ""; // The system-found Operating System version in string form
+  os_text: string = ""; // The user-specified Operating System version in string form
+  ip_text: string = ""; // The user-specified IPv4 Address in string form
+  ipFound: boolean = false; // True if the IP was discovered by the server; false otherwise
+  osSelection: boolean = true; // Toggle for whether or not the OS home selection view should be shown; default false
+  ipSelection: boolean = false; // Toggle for whether or not the IP selection view should be shown; default false
 
   ngOnInit(): void {
     this.operatingSystems = this._dataService.getOSList();
     this.deviceInfo = this.deviceDetector.getDeviceInfo();
+    this.ipFound = this._dataService.locateClientIP(); 
     this.os_version = this.deviceInfo.os_version;
 
+    // Determine whether or not the user's
+    // Operating System exists in our OS list
     this.operatingSystems.forEach(os => {
       if(os.value == this.os_version) {
         this.selectedOS = os;
         this.selectOS = false;
       }
     });
+
+    // If the OS was not found, give the OS object a default value
+    // to avoid 'undefined' errors 
     if(this.selectOS == true) {
-      this.found = false;
+      this.foundOS = false;
+      this.selectedOS = {
+        name: "default",
+        value: "default"
+      }
+    }
+
+    // If the IP address was not found, give the IP object a default value
+    // to avoid 'undefined' errors. Otherwise, give the IP object the located value
+    if(!this.ipFound) {
+      this.selectedIP = {
+        ip_address: "default"
+      }
+    } else {
+      var ip = this._dataService.getIP();
+      if(ip !== null) {
+        this.selectedIP.ip_address = ip.ip_address;
+      }
     }
   }
 
@@ -51,6 +80,8 @@ export class SetupNewUserComponent implements OnInit {
 
   backToOSSelection(): void {
     this.showText = false;
+    this.ipSelection = false;
+    this.osSelection = true;
   }
 
   /**
@@ -75,10 +106,19 @@ export class SetupNewUserComponent implements OnInit {
          validOS = true;
     });
 
-    console.log(validOS);
-
-    if(validOS || 
-      (!this.found && selectedOS !== null))
+    this.osSelection = false;
+    this.ipSelection = true;
+  }
+  
+  submitIPChoice(selectedIP: IpAddress): void {
+    //TODO: Validate IP
+    var validIP: boolean = true;
+    if(!this.foundIP) {
+      this.selectedIP.ip_address = this.ip_text;
+      this._dataService.setIP(selectedIP);
+    }
+    if(validIP || 
+    (!this.foundIP && selectedIP !== null))
     { 
       this.router.navigate(['/main']);
     }

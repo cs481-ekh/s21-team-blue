@@ -19,7 +19,7 @@ export class RouteGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): true | UrlTree {
-      if (this._dataService.getOS()) return true;
+      if (this._dataService.getOS() && this._dataService.getIP()) return true;
       else return this._router.parseUrl('/setup');
   }
   

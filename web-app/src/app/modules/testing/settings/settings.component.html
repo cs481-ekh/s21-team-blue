@@ -1,14 +1,25 @@
 <div class="wrapper">
+    <p-toast position="top-center" key="tc-os"></p-toast>
+    <p-toast position="top-center" key="tc-ip"></p-toast>
+
     <i class="pi pi-home settings-icon" title="Home" [routerLink]="['/main']" style="font-size: 3rem;"></i>
-    <div class="os">
-        <p-toast position="top-center" key="tc"></p-toast>
+    <div *ngIf="!osSelection && !ipSelection">
+        <button pButton pRipple style="margin-right: 20px;" type="button" label="Change Operating System" (click)="toggleOSView()"></button>
+        <button pButton pRipple type="button" label="Change IP Address" (click)="toggleIPView()"></button>
+    </div> 
+    <div *ngIf="osSelection" class="os">
+        <i class="pi pi-chevron-left back-icon" title="Back" (click)="toggleOSView()" style="font-size: 2rem;"></i>
         <p>You've specified your Operating System to be: <span style="color: #5fb8ee">{{os.name}}</span>. If this is incorrect, you may change it now:</p>
-        
         <p-dropdown *ngIf="!showText" [options]="os_list" placeholder="Select your OS" [(ngModel)]="selectedOS" optionLabel="name"></p-dropdown>
         <i *ngIf="!showText" class="pi pi-angle-right" (click)="toggleTextBox()"> OS not listed? Click here.</i>
         <input *ngIf="showText" id="os" type="text" [(ngModel)]="os_text" aria-describedby="os-help" pInputText />
         <i *ngIf="showText" class="pi pi-angle-left" (click)="toggleTextBox()"> Back to OS Selection</i>
-        <!-- On submit, show a green toast message saying "OS Details Updated" -->
         <button pButton pRipple type="button" label="Submit Change" [disabled]="(selectedOS === os && !showText) || (showText && os_text === '')" (click)="submitOSUpdate(selectedOS)"></button>
+    </div>
+    <div *ngIf="ipSelection" class="ip">
+        <i class="pi pi-chevron-left back-icon" title="Back" (click)="toggleIPView()" style="font-size: 2rem;"></i>
+        <p>You've specified your IPv4 address to be: <span style="color: #5fb8ee">{{ip.ip_address}}</span>. If this is incorrect, you may change it now:</p>
+        <input type="text" minlength="7" maxlength="15" size="15" [(ngModel)]="ip_text" placeholder="xxx.xxx.xxx.xxx" pattern="^((\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$" style="margin-bottom: 10px;" pInputText />
+        <button pButton pRipple type="button" label="Submit Change" [disabled]="ip_text === ''" (click)="submitIPUpdate()"></button>
     </div>
 </div>
