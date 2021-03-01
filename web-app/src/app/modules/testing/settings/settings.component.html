@@ -19,7 +19,13 @@
     <div *ngIf="ipSelection" class="ip">
         <i class="pi pi-chevron-left back-icon" title="Back" (click)="toggleIPView()" style="font-size: 2rem;"></i>
         <p>You've specified your IPv4 address to be: <span style="color: #5fb8ee">{{ip.ip_address}}</span>. If this is incorrect, you may change it now:</p>
-        <input type="text" minlength="7" maxlength="15" size="15" [(ngModel)]="ip_text" placeholder="xxx.xxx.xxx.xxx" pattern="^((\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$" style="margin-bottom: 10px;" pInputText />
-        <button pButton pRipple type="button" label="Submit Change" [disabled]="ip_text === ''" (click)="submitIPUpdate()"></button>
+        <label for="ip">IP Address</label>
+        <form [formGroup]="ip_form" id="ip_form">
+            <input pInputText type="text" placeholder="xxx.xxx.xxx.xxx" [formControlName]="'ip'"/>
+        </form>
+        <div *ngIf="ip_form.controls['ip'].errors?.invalidIp==true" style="margin-top: 10px;">
+            <p-message  severity="info" text="Must enter a public IP address, with each octet separated by a period. Example: 132.178.0.7"></p-message>
+        </div>
+        <button pButton pRipple style="margin-top: 10px;" type="button" label="Submit Change" [disabled]="ip_form.controls['ip'].errors?.invalidIp==true" (click)="submitIPUpdate()"></button>
     </div>
 </div>

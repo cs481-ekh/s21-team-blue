@@ -27,9 +27,14 @@
         <p *ngIf="!foundIP">We were unable to detect your IP address. Please enter your public IPv4 address in the field below, then click Continue</p>
         <div *ngIf="!foundIP" class="p-field">
             <label for="ip">IP Address</label>
-            <input type="text" minlength="7" maxlength="15" size="15" [(ngModel)]="ip_text" placeholder="xxx.xxx.xxx.xxx" pattern="^((\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$" pInputText />
+            <form [formGroup]="ip_form" id="ip_form">
+                <input pInputText type="text" placeholder="xxx.xxx.xxx.xxx" [formControlName]="'ip'"/>
+            </form>
+            <div *ngIf="ip_form.controls['ip'].errors?.invalidIp==true" style="margin-top: 10px;">
+                <p-message  severity="info" text="Must enter a public IP address, with each octet separated by a period. Example: 132.178.0.7"></p-message>
+            </div>
         </div>
         <i class="pi pi-angle-left" (click)="backToOSSelection()"> Back to OS Selection</i>
-        <button pButton pRipple type="button" label="Continue" [disabled]="(selectedIP == null && foundIP) || (!foundIP && ip_text === '')" (click)="submitIPChoice(selectedIP)"></button>
+        <button pButton pRipple type="button" label="Continue" [disabled]="ip_form.controls['ip'].errors?.invalidIp==true && ip_form.controls['ip'].dirty" (click)="submitIPChoice(selectedIP)"></button>
     </div>
 </div>

@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core'; 
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DeviceDetectorService, DeviceInfo } from 'ngx-device-detector';
 import { IpAddress, OperatingSystem } from 'src/app/shared/models/system-info-models';
 import { DataService } from 'src/app/shared/services/data.service';
+import { IpAddressValidator } from 'src/app/shared/validators/ip.validator';
 
 @Component({
   selector: 'app-setup-new-user',
@@ -30,6 +32,7 @@ export class SetupNewUserComponent implements OnInit {
   ipFound: boolean = false; // True if the IP was discovered by the server; false otherwise
   osSelection: boolean = true; // Toggle for whether or not the OS home selection view should be shown; default false
   ipSelection: boolean = false; // Toggle for whether or not the IP selection view should be shown; default false
+  ip_form: FormGroup;
 
   ngOnInit(): void {
     this.operatingSystems = this._dataService.getOSList();
@@ -68,6 +71,10 @@ export class SetupNewUserComponent implements OnInit {
         this.selectedIP.ip_address = ip.ip_address;
       }
     }
+
+    this.ip_form = new FormGroup({
+      ip: new FormControl('', [Validators.required, Validators.minLength(7), Validators.maxLength(15), IpAddressValidator()])
+    });
   }
 
   select(): void {
@@ -111,20 +118,14 @@ export class SetupNewUserComponent implements OnInit {
   }
   
   submitIPChoice(selectedIP: IpAddress): void {
-    //TODO: Validate IP
-    var validIP: boolean = true;
-    if(!this.foundIP) {
-      this.selectedIP.ip_address = this.ip_text;
-      this._dataService.setIP(selectedIP);
+    if(this.ip_form.controls['ip'].dirty && this.ip_form.valid) {
+      selectedIP.ip_address = this.ip_form.controls['ip'].value;
+    } else {
+      console.log("Error! Please enter a valid IP Address");
     }
-    if(validIP || 
-    (!this.foundIP && selectedIP !== null))
-    { 
-      this.router.navigate(['/main']);
-    }
-    else {
-      console.log("Error! Please choose a valid Operating System from the listed options");
-    }
+
+    this._dataService.setIP(selectedIP);
+    this.router.navigate(['/main']);
   }
 
 }
