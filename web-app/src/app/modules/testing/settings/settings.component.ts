@@ -1,8 +1,10 @@
 import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { IpAddress, OperatingSystem } from 'src/app/shared/models/system-info-models';
 import { DataService } from 'src/app/shared/services/data.service';
+import { IpAddressValidator } from 'src/app/shared/validators/ip.validator';
 
 @Component({
   selector: 'app-settings',
@@ -21,6 +23,7 @@ export class SettingsComponent implements OnInit {
   ipSelection: boolean = false;
   selectedOS: OperatingSystem;
   showText: boolean = false;
+  ip_form: FormGroup;
 
   constructor(private messageService: MessageService, private _dataService: DataService) { }
 
@@ -36,6 +39,10 @@ export class SettingsComponent implements OnInit {
     if(possibleIP !== null) this.ip = possibleIP;
 
     this.selectedOS = this.os;
+
+    this.ip_form = new FormGroup({
+      ip: new FormControl('', [Validators.required, Validators.minLength(7), Validators.maxLength(15), IpAddressValidator()])
+    });
   }
 
   toggleTextBox(): void {
@@ -63,7 +70,7 @@ export class SettingsComponent implements OnInit {
   }
 
   submitIPUpdate(): void {
-    this.ip.ip_address = this.ip_text;
+    this.ip.ip_address = this.ip_form.controls['ip'].value;
     this._dataService.setIP(this.ip);
     var possibleIP = this._dataService.getIP();
     if(possibleIP !== null) this.ip = possibleIP;

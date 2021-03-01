@@ -15,7 +15,7 @@ import { NotFoundComponent } from './errors/not-found/not-found.component';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
