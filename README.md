@@ -1,4 +1,4 @@
-![example workflow file path](https://github.com/cs481-ekh/s21-team-blue/workflows/.github/workflows/main.yml/badge.svg)
+![Main workflow](https://github.com/cs481-ekh/s21-team-blue/workflows/Build/badge.svg)
 
 
 # PiRate
