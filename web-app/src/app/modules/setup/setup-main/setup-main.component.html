@@ -9,9 +9,8 @@
     <div class="returning-client">
         <p>If you HAVE used PiRate on this device, upload the save file that PiRate uses.</p>
         <form action="">
-            <p-fileUpload #fubauto mode="basic" name="demo[]" url="./upload.php" accept="image/*" chooseLabel="Browse"></p-fileUpload>
-            <button pButton pRipple type="button" label="Go!" disabled="true"></button>
-            <!-- Enable after directory specified -->
+            <p-fileUpload mode="basic" chooseLabel="Browse" name="upload[]" accept=".dat" customUpload="true" maxFileSize="10000000" (uploadHandler)="onUpload($event)" (onUpload)="onUpload($event)" [auto]="true"></p-fileUpload>
+            <button pButton pRipple type="button" label="Go!" [disabled]="!uploadSuccess" (click)="goToTesting()"></button> 
         </form>
     </div>
-</div>
+</div>   
