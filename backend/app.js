@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const RequestIp = require('@supercharge/request-ip');
+const { networkInterfaces } = require('os');
 
 var app = express();
 var ip;
@@ -26,7 +27,25 @@ app.get('/api/get-client-ip', (req, res) => {
       "ip_address" : "Error: Unable to identify client IP Address"
     })
   }
-})
+});
+
+// Sample POST to run a single test
+app.post('/api/run-single-test', (req, res) => {
+  test = req.body;
+  test_id = test.test_id; // Send this test ID to the Python controller, and retrieve the results
+  today = new Date();
+  date = today.getFullYear() + '-' + today.getMonth() + '-' + today.getDay();
+  
+  // Sample result - Delete when results are actually returned from the Python controller
+  results = '{' +
+    '"id" : "1", ' +
+    '"test_id" : "7", ' +
+    '"description" : "1000 ports scanned, 0 open", ' +
+    '"date" : "' + date + '", ' + 
+    '"value" : "Success!"' +
+  '}';
+  res.send(JSON.parse(results));
+});
 
 app.all('/*', function(req, res, next) {
   // Just send the index.html for other files to support HTML5Mode

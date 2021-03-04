@@ -59,7 +59,7 @@
         <div class="test-results" *ngIf="resultsView">
             <p-table [value]="testResults"
             [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [paginator]="true"
-            dataKey="result_test_id" styleClass="p-datatable-tests"
+            dataKey="test_id" styleClass="p-datatable-tests"
             [filterDelay]="0" [rows]="10" [rowHover]="true">
                 <ng-template pTemplate="caption">
                     <div class="table-header">
@@ -75,7 +75,7 @@
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-result>
-                    <p-dialog [dismissableMask]="true" header="{{result.result_test.test_name}}" [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
+                    <p-dialog [dismissableMask]="true" header="{{result.test_id}}" [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
                     [draggable]="false" [resizable]="false">
                     <p class="p-m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
                         laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
@@ -85,10 +85,10 @@
                         </ng-template>
                     </p-dialog>
                     <tr>
-                        <td class="td-clickable" (click)="showModalDialog()">{{result.result_id}}</td>
-                        <td class="td-clickable" (click)="showModalDialog()">{{result.result_test.test_name}}</td>
-                        <td class="td-clickable" (click)="showModalDialog()">{{result.result_date}}</td>
-                        <td class="td-clickable" (click)="showModalDialog()">{{result.result_value}}</td>
+                        <td class="td-clickable" (click)="showModalDialog()">{{result.id}}</td>
+                        <td class="td-clickable" (click)="showModalDialog()">{{result.test_id}}</td>
+                        <td class="td-clickable" (click)="showModalDialog()">{{result.date}}</td>
+                        <td class="td-clickable" (click)="showModalDialog()">{{result.value}}</td>
                     </tr>
                 </ng-template>
             </p-table>

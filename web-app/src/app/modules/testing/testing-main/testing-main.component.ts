@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OperatingSystem } from 'src/app/shared/models/system-info-models';
 import { TestResults, Test } from 'src/app/shared/models/test-models'; 
+import { ApiService } from 'src/app/shared/services/api.service';
 import { DataService } from 'src/app/shared/services/data.service';
 
 @Component({
@@ -20,7 +21,9 @@ export class TestingMainComponent implements OnInit {
   os: OperatingSystem;
   displayModal: boolean = false;
 
-  constructor(private _dataService: DataService) { }
+  singleTestResult: TestResults;
+
+  constructor(private _dataService: DataService, private _apiService: ApiService) { }
 
   ngOnInit(): void {
     this.fillTests();
@@ -449,25 +452,25 @@ export class TestingMainComponent implements OnInit {
   fillTestResults(): void {
     this.testResults = [
       {
-        result_id: '1',
-        result_test: this.tests[0],
-        result_description: 'result1 description',
-        result_date: '2020-01-07',
-        result_value: 'Failed'
+        id: '1',
+        test_id: '7',
+        description: 'result1 description',
+        date: '2020-01-07',
+        value: 'Failed'
       },
       {
-        result_id: '2',
-        result_test: this.tests[1],
-        result_description: 'result2 description',
-        result_date: '2020-02-07',
-        result_value: 'Failed'
+        id: '2',
+        test_id: '8',
+        description: 'result2 description',
+        date: '2020-02-07',
+        value: 'Failed'
       },
       {
-        result_id: '3',
-        result_test: this.tests[1],
-        result_description: 'result3 description',
-        result_date: '2020-02-07',
-        result_value: 'Success'
+        id: '3',
+        test_id: '31',
+        description: 'result3 description',
+        date: '2020-02-07',
+        value: 'Success'
       }
     ]
   }
@@ -481,6 +484,13 @@ export class TestingMainComponent implements OnInit {
     // Flip the screen to show results
     this.testsView = false;
     this.loadingView = true;
+
+    this._apiService.runSingleTest("1").subscribe((response: TestResults) => {
+      this.singleTestResult = response;
+      this.testResults[0] = this.singleTestResult;
+      this.resultView();
+    }); 
+
   }
 
   /**
@@ -499,6 +509,7 @@ export class TestingMainComponent implements OnInit {
    */
   resultView(): void {
     this.testsView = false;
+    this.loadingView = false;
     this.resultsView = true;
   }
 

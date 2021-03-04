@@ -51,18 +51,8 @@ export class DataService {
    * Get the client IP from the server and store it in local storage
    * Return - true if found, false otherwise
    */
-  locateClientIP(): boolean {
-    this.http.get<IpAddress>('/api/get-client-ip').subscribe((response: IpAddress) => {
-      this.ip_str = response.ip_address;
-      if(!this.ip_str.includes("Error")) {
-        this.localStorage.setItem("ip", this.ip_str);
-        this.ip = JSON.parse(this.ip_str);
-        return true;
-      } else {
-        return false;
-      }
-    });
-    return false;
+  locateClientIP(): Observable<IpAddress> {
+    return this.http.get<IpAddress>('/api/get-client-ip');
   }
 
   setIP(ip: IpAddress): boolean {
