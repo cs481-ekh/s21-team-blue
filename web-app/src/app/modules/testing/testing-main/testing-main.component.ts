@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { OperatingSystem } from 'src/app/shared/models/system-info-models';
+import { IpAddress, OperatingSystem } from 'src/app/shared/models/system-info-models';
 import { TestResults, Test } from 'src/app/shared/models/test-models'; 
 import { ApiService } from 'src/app/shared/services/api.service';
 import { DataService } from 'src/app/shared/services/data.service';
@@ -12,7 +12,6 @@ import { DataService } from 'src/app/shared/services/data.service';
 export class TestingMainComponent implements OnInit {
 
   tests: Test[];
-  test_ids: string[];
   selectedTests: Test[];
   testResults: TestResults[];
   testsView: boolean = true;
@@ -20,6 +19,7 @@ export class TestingMainComponent implements OnInit {
   testsRun: boolean = false;
   loadingView: boolean = false;
   os: OperatingSystem;
+  ip: IpAddress;
   displayModal: boolean = false;
 
   singleTestResult: TestResults;
@@ -484,13 +484,18 @@ export class TestingMainComponent implements OnInit {
     this.testsView = false;
     this.loadingView = true;
 
-    var testIds: string[] = [];
+    var request: string[] = [];
+
+    var possibleIP = this._dataService.getIP();
+    if(possibleIP !== null) this.ip = possibleIP;
+
+    request.push(this.ip.ip_address); // Add the IP address as the first index in the string array.
 
     this.selectedTests.forEach(function(test) {
-      testIds.push(test.test_id);
+      request.push(test.test_id);
     });
 
-    this._apiService.runSingleTest(testIds).subscribe((response: TestResults[]) => {
+    this._apiService.runSingleTest(request).subscribe((response: TestResults[]) => {
       this.testResults = response;
       this.testsRun = true;
       this.resultView();
