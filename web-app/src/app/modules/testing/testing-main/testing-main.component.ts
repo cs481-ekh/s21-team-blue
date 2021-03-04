@@ -12,6 +12,7 @@ import { DataService } from 'src/app/shared/services/data.service';
 export class TestingMainComponent implements OnInit {
 
   tests: Test[];
+  test_ids: string[];
   selectedTests: Test[];
   testResults: TestResults[];
   testsView: boolean = true;
@@ -478,16 +479,20 @@ export class TestingMainComponent implements OnInit {
   /** 
    * Execute the selected tests
    */
-  runTests(): void {
-    //executeSelected(this.selectedTests);
-    
+  runTests(): void {    
     // Flip the screen to show results
     this.testsView = false;
     this.loadingView = true;
 
-    this._apiService.runSingleTest("1").subscribe((response: TestResults) => {
-      this.singleTestResult = response;
-      this.testResults[0] = this.singleTestResult;
+    var testIds: string[] = [];
+
+    this.selectedTests.forEach(function(test) {
+      testIds.push(test.test_id);
+    });
+
+    this._apiService.runSingleTest(testIds).subscribe((response: TestResults[]) => {
+      this.testResults = response;
+      this.testsRun = true;
       this.resultView();
     }); 
 

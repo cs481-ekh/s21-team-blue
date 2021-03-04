@@ -20,8 +20,8 @@ export class  ApiService {
    * Get the client IP from the server and store it in local storage
    * Return - true if found, false otherwise
    */
-  runSingleTest(id: string): Observable<TestResults> {
-    return this.http.post<TestResults>('/api/run-single-test', id)
+  runSingleTest(ids: string[]): Observable<TestResults[]> {
+    return this.http.post<TestResults[]>('/api/run-tests', ids)
     .pipe(catchError(this.errorHandler));
   }
 
