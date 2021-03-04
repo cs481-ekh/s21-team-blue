@@ -31,13 +31,19 @@ app.get('/api/get-client-ip', (req, res) => {
 
 // Run one or more tests and return the TestResults
 app.post('/api/run-tests', (req, res) => {
-  test_id_list = req.body;
+  request = req.body;
 
-  // 'test_id_list' is a string[] of test_ids. Send this array to the controller,
+  // Grab the IP address and remove it from the array. The shift() method
+  // removes the first element of the array and shifts all other elements
+  // one index to the left to fill that gap. The array will now only contain 
+  // Test IDs.
+  ip_address = request.shift(); 
+
+  // 'request' is a string[] of Test IDs. Send this array to the controller,
   // have it loop through each id, run the corresponding test, and return the 
-  // results in a TestResults[] in the same order as the test_ids.
-  test_id_list.forEach(function(test_id) {
-    console.log(test_id);
+  // results in a TestResults[] in the same order as the Test IDs.
+  request.forEach(function(test_id) {
+    console.log(test_id); // Testing purposes only; delete on production
   });
 
   // Get today's date. Delete when results are actually returned from the Python controller.
