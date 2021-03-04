@@ -46,7 +46,7 @@
                 </ng-template>
             </p-table>
             <button *ngIf="testsRun" style="margin-top: 5px;" pButton pRipple type="button" label="View Last Test Results" (click)="resultView()"></button>
-            <button style="float: right; margin-top: 5px;" pButton pRipple type="button" label="Run Selected Tests" (click)="runTests()"></button>
+            <button style="float: right; margin-top: 5px;" pButton pRipple type="button" [disabled]="selectedTests == null || selectedTests[0] == undefined" label="Run Selected Tests" (click)="runTests()"></button>
         </div>
 
         <!-- Loading screen while tests are running -->

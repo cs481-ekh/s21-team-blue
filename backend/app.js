@@ -29,22 +29,37 @@ app.get('/api/get-client-ip', (req, res) => {
   }
 });
 
-// Sample POST to run a single test
-app.post('/api/run-single-test', (req, res) => {
-  test = req.body;
-  test_id = test.test_id; // Send this test ID to the Python controller, and retrieve the results
+// Run one or more tests and return the TestResults
+app.post('/api/run-tests', (req, res) => {
+  test_id_list = req.body;
+
+  // 'test_id_list' is a string[] of test_ids. Send this array to the controller,
+  // have it loop through each id, run the corresponding test, and return the 
+  // results in a TestResults[] in the same order as the test_ids.
+  test_id_list.forEach(function(test_id) {
+    console.log(test_id);
+  });
+
+  // Get today's date. Delete when results are actually returned from the Python controller.
   today = new Date();
   date = today.getFullYear() + '-' + today.getMonth() + '-' + today.getDay();
   
-  // Sample result - Delete when results are actually returned from the Python controller
-  results = '{' +
+  // Sample results - Delete when results are actually returned from the Python controller
+  results = '[{' +
     '"id" : "1", ' +
     '"test_id" : "7", ' +
     '"description" : "1000 ports scanned, 0 open", ' +
     '"date" : "' + date + '", ' + 
-    '"value" : "Success!"' +
-  '}';
-  res.send(JSON.parse(results));
+    '"value" : "Success"' +
+  '},' + 
+  '{' +
+    '"id" : "2", ' +
+    '"test_id" : "8", ' +
+    '"description" : "1001 ports scanned, 0 open", ' +
+    '"date" : "' + date + '", ' + 
+    '"value" : "Failure"' +
+  '}]';
+  res.send(JSON.parse(results)); // Return the results of the tests.
 });
 
 app.all('/*', function(req, res, next) {
