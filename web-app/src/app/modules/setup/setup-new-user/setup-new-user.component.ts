@@ -24,12 +24,12 @@ export class SetupNewUserComponent implements OnInit {
   selectOS: boolean = true; // Toggle for whether or not the OS user-selection view should be shown
   showText: boolean = false; // Toggle for whether or not the OS text box should be shown
   foundOS: boolean = true; // True if the OS was found automatically; false otherwise
-  foundIP: boolean = false; // True if the IP was found automatically; false otherwise
   deviceInfo: DeviceInfo; // Finds information about the device (including the OS version)
   os_version: string = ""; // The system-found Operating System version in string form
   os_text: string = ""; // The user-specified Operating System version in string form
   ip_text: string = ""; // The user-specified IPv4 Address in string form
   ipFound: boolean = false; // True if the IP was discovered by the server; false otherwise
+  selectIP: boolean = false;
   osSelection: boolean = true; // Toggle for whether or not the OS home selection view should be shown; default false
   ipSelection: boolean = false; // Toggle for whether or not the IP selection view should be shown; default false
   ip_form: FormGroup;
@@ -37,7 +37,21 @@ export class SetupNewUserComponent implements OnInit {
   ngOnInit(): void {
     this.operatingSystems = this._dataService.getOSList();
     this.deviceInfo = this.deviceDetector.getDeviceInfo();
-    this.ipFound = this._dataService.locateClientIP(); 
+    this._dataService.locateClientIP().subscribe((response: IpAddress) => {
+      if(!response.ip_address.includes("Error")){
+        this.selectedIP = response;
+        var setIp = this._dataService.setIP(this.selectedIP);
+        if(setIp) {
+          this.ipFound = true;
+        }
+        else { 
+          this.selectedIP = {
+            ip_address: "default"
+          }
+        }
+      }
+    }); 
+
     this.os_version = this.deviceInfo.os_version;
 
     // Determine whether or not the user's
@@ -59,19 +73,6 @@ export class SetupNewUserComponent implements OnInit {
       }
     }
 
-    // If the IP address was not found, give the IP object a default value
-    // to avoid 'undefined' errors. Otherwise, give the IP object the located value
-    if(!this.ipFound) {
-      this.selectedIP = {
-        ip_address: "default"
-      }
-    } else {
-      var ip = this._dataService.getIP();
-      if(ip !== null) {
-        this.selectedIP.ip_address = ip.ip_address;
-      }
-    }
-
     this.ip_form = new FormGroup({
       ip: new FormControl('', [Validators.required, Validators.minLength(7), Validators.maxLength(15), IpAddressValidator()])
     });
@@ -79,6 +80,10 @@ export class SetupNewUserComponent implements OnInit {
 
   select(): void {
     this.selectOS = true;
+  }
+
+  selectIp(): void {
+    this.selectIP = true;
   }
 
   showTextBox(): void {
@@ -119,7 +124,9 @@ export class SetupNewUserComponent implements OnInit {
   
   submitIPChoice(selectedIP: IpAddress): void {
     if(this.ip_form.controls['ip'].dirty && this.ip_form.valid) {
-      selectedIP.ip_address = this.ip_form.controls['ip'].value;
+      selectedIP = {
+        ip_address : this.ip_form.controls['ip'].value
+      }
     } else {
       console.log("Error! Please enter a valid IP Address");
     }

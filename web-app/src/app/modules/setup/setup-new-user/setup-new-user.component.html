@@ -22,10 +22,10 @@
     <div *ngIf="ipSelection" class="ip-selection">
         <div *ngIf="ipFound">
             <p style="margin-bottom: 0px;">We detected that your IPv4 address is <span style="font-weight: bolder; color:#2196F3"> {{selectedIP.ip_address}}</span>. If this is correct, click Continue. Otherwise, click Set My IP.</p>
-            <button pButton pRipple class="p-button-outlined" label="Set My IP" (click)="select()"></button>
+            <button *ngIf="!selectIP" pButton pRipple class="p-button-outlined" label="Set My IP" (click)="selectIp()"></button>
         </div>
-        <p *ngIf="!foundIP">We were unable to detect your IP address. Please enter your public IPv4 address in the field below, then click Continue</p>
-        <div *ngIf="!foundIP" class="p-field">
+        <p *ngIf="!ipFound">We were unable to detect your IP address. Please enter your public IPv4 address in the field below, then click Continue</p>
+        <div *ngIf="!ipFound || selectIP" class="p-field">
             <label for="ip">IP Address</label>
             <form [formGroup]="ip_form" id="ip_form">
                 <input pInputText type="text" placeholder="xxx.xxx.xxx.xxx" [formControlName]="'ip'"/>
