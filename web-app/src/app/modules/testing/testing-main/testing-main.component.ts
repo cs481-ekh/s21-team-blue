@@ -31,6 +31,13 @@ export class TestingMainComponent implements OnInit {
     this.fillTestResults();
     var possibleOS = this._dataService.getOS();
     if(possibleOS !== null) this.os = possibleOS;
+    if(this._dataService.getTestResultsList() !== null) {
+      var tr = this._dataService.getTestResultsList();
+      if(tr !== null) {
+        this.testResults = tr;
+        this.testsRun = true;
+      }
+    }
   }
 
   showModalDialog() {
@@ -495,7 +502,7 @@ export class TestingMainComponent implements OnInit {
       request.push(test.test_id);
     });
 
-    this._apiService.runSingleTest(request).subscribe((response: TestResults[]) => {
+    this._apiService.runTests(request).subscribe((response: TestResults[]) => {
       this.testResults = response;
       this.testsRun = true;
       this.resultView();

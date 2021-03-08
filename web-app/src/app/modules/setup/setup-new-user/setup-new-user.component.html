@@ -12,10 +12,15 @@
         <div *ngIf="showText" class="p-field">
             <p>Enter the name of your Operating System</p>
             <label for="os">Operating System</label>
-            <input id="os" type="text" [(ngModel)]="os_text" aria-describedby="os-help" pInputText />
+            <form [formGroup]="os_form" id="os-form">
+                <input pInputText id="os" type="text" aria-describedby="os-help" [formControlName]="'os'" />
+            </form>
+            <div *ngIf="os_form.controls['os'].errors?.invalidOs==true && os_form.controls['os'].dirty" style="margin-top: 10px;">
+                <p-message  severity="info" text="Commas are not allowed in the OS name, and the field cannot be left blank"></p-message>
+            </div>
             <i class="pi pi-angle-left" (click)="backToOSSelection()"> Back to OS Selection</i>
         </div>
-        <button pButton pRipple type="button" label="Continue" [disabled]="(selectedOS == null && foundOS) || (showText && os_text === '')" (click)="submitOSChoice(selectedOS)"></button>
+        <button pButton pRipple type="button" label="Continue" [disabled]="os_form.controls['os'].errors?.invalidOs==true && os_form.controls['os'].dirty && showText" (click)="submitOSChoice(selectedOS)"></button>
     </div>
     
     <!--IP Address Selection View-->

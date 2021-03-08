@@ -5,6 +5,7 @@ import { DeviceDetectorService, DeviceInfo } from 'ngx-device-detector';
 import { IpAddress, OperatingSystem } from 'src/app/shared/models/system-info-models';
 import { DataService } from 'src/app/shared/services/data.service';
 import { IpAddressValidator } from 'src/app/shared/validators/ip.validator';
+import { OperatingSystemValidator } from 'src/app/shared/validators/os.validator';
 
 @Component({
   selector: 'app-setup-new-user',
@@ -32,6 +33,7 @@ export class SetupNewUserComponent implements OnInit {
   selectIP: boolean = false;
   osSelection: boolean = true; // Toggle for whether or not the OS home selection view should be shown; default false
   ipSelection: boolean = false; // Toggle for whether or not the IP selection view should be shown; default false
+  os_form: FormGroup;
   ip_form: FormGroup;
 
   ngOnInit(): void {
@@ -73,6 +75,10 @@ export class SetupNewUserComponent implements OnInit {
       }
     }
 
+    this.os_form = new FormGroup({
+      os: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(50), OperatingSystemValidator()])
+    });
+
     this.ip_form = new FormGroup({
       ip: new FormControl('', [Validators.required, Validators.minLength(7), Validators.maxLength(15), IpAddressValidator()])
     });
@@ -103,8 +109,8 @@ export class SetupNewUserComponent implements OnInit {
   submitOSChoice(selectedOS: OperatingSystem): void {
 
     if(this.showText) {
-      this.selectedOS.name = this.os_text;
-      this.selectedOS.value = this.os_text; // Maybe make this "any"?
+      this.selectedOS.name = this.os_form.controls['os'].value;
+      this.selectedOS.value = this.os_form.controls['os'].value;
       this._dataService.setOS(selectedOS);
       this.router.navigate(['/main']);
       return;
