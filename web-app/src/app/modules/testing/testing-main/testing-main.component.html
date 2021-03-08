@@ -45,7 +45,7 @@
                     </tr>
                 </ng-template>
             </p-table>
-            <button *ngIf="testsRun" style="margin-top: 5px;" pButton pRipple type="button" label="View Last Test Results" (click)="resultView()"></button>
+            <button *ngIf="testsRun" style="margin-top: 5px;" pButton pRipple type="button" label="View Previous Test Results" (click)="resultView()"></button>
             <button style="float: right; margin-top: 5px;" pButton pRipple type="button" [disabled]="selectedTests == null || selectedTests[0] == undefined" label="Run Selected Tests" (click)="runTests()"></button>
         </div>
 
@@ -92,7 +92,7 @@
                     </tr>
                 </ng-template>
             </p-table>
-            <button style="float: right; margin-top: 5px;" pButton pRipple type="button" label="Return to test selection" (click)="testView()"></button>
+            <button style="float: right; margin-top: 5px;" pButton pRipple type="button" label="Return to Test Selection" (click)="testView()"></button>
         </div>
     </div>
 </div>

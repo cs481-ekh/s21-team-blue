@@ -5,6 +5,7 @@ import { MessageService } from 'primeng/api';
 import { IpAddress, OperatingSystem } from 'src/app/shared/models/system-info-models';
 import { DataService } from 'src/app/shared/services/data.service';
 import { IpAddressValidator } from 'src/app/shared/validators/ip.validator';
+import { OperatingSystemValidator } from 'src/app/shared/validators/os.validator';
 
 @Component({
   selector: 'app-settings',
@@ -24,6 +25,7 @@ export class SettingsComponent implements OnInit {
   selectedOS: OperatingSystem;
   showText: boolean = false;
   ip_form: FormGroup;
+  os_form: FormGroup;
 
   constructor(private messageService: MessageService, private _dataService: DataService) { }
 
@@ -43,6 +45,10 @@ export class SettingsComponent implements OnInit {
     this.ip_form = new FormGroup({
       ip: new FormControl('', [Validators.required, Validators.minLength(7), Validators.maxLength(15), IpAddressValidator()])
     });
+
+    this.os_form = new FormGroup({
+      os: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(50), OperatingSystemValidator()])
+    });
   }
 
   toggleTextBox(): void {
@@ -59,8 +65,8 @@ export class SettingsComponent implements OnInit {
 
   submitOSUpdate(os: OperatingSystem): void {
     if(this.showText) {
-      os.name = this.os_text;
-      os.value = this.os_text;
+      os.name = this.os_form.controls['os'].value;
+      os.value = this.os_form.controls['os'].value;
     }
     this._dataService.setOS(os);
     var possibleOS = this._dataService.getOS();

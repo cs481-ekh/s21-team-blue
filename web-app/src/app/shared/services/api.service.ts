@@ -11,16 +11,13 @@ import { TestResults } from '../models/test-models';
 
 export class  ApiService {
  
-  constructor(private http: HttpClient) {
-  }
-
-
+  constructor(private http: HttpClient) {}
 
   /**
    * Get the client IP from the server and store it in local storage
    * Return - true if found, false otherwise
    */
-  runSingleTest(ids: string[]): Observable<TestResults[]> {
+  runTests(ids: string[]): Observable<TestResults[]> {
     return this.http.post<TestResults[]>('/api/run-tests', ids)
     .pipe(catchError(this.errorHandler));
   }

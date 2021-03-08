@@ -1,6 +1,13 @@
 <div class="welcome">
     Welcome to PiRate!
 </div>
+<p-dialog header="File Format Error" [(visible)]="displayError && displayDialog" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="1000"
+    [draggable]="false" [resizable]="false">
+    <p class="p-m-0">There was an issue parsing the Test History file. Please continue the setup as a new user, or try again with a different file.</p>
+        <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="displayDialog=false" label="Ok" styleClass="p-button-text"></p-button>
+        </ng-template>
+</p-dialog>
 <div class="content">
     <div class="new-client">
         <p>If you have NEVER used PiRate on this device...</p>
@@ -10,6 +17,9 @@
         <p>If you HAVE used PiRate on this device, upload the save file that PiRate uses.</p>
         <form action="">
             <p-fileUpload mode="basic" chooseLabel="Browse" name="upload[]" accept=".dat" customUpload="true" maxFileSize="10000000" (uploadHandler)="onUpload($event)" (onUpload)="onUpload($event)" [auto]="true"></p-fileUpload>
+            <div *ngIf="displayError" style="margin-top: 20px;">
+                <p-message severity="error" text="File format error. Please try again with a different/modified file."></p-message>
+            </div>
             <button pButton pRipple type="button" label="Go!" [disabled]="!uploadSuccess" (click)="goToTesting()"></button> 
         </form>
     </div>
