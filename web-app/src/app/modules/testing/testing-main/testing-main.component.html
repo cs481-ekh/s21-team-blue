@@ -17,10 +17,9 @@
                         <th style="width: 3rem">
                             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                         </th>
-                        <th>ID</th>
-                        <th>Name</th>
+                        <th pSortableColumn="test_name">Name <p-sortIcon field="test_name"></p-sortIcon></th>
                         <th>Description</th>
-                        <th>Operating Systems</th>
+                        <th pSortableColumn="operating_systems">Operating Systems <p-sortIcon field="operating_systems"></p-sortIcon></th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-test>
@@ -38,7 +37,6 @@
                             <!-- Disable if OS isn't compatible -->
                             <p-tableCheckbox [value]="test"></p-tableCheckbox>
                         </td>
-                        <td class="td-clickable" (click)="showModalDialog()">{{test.test_id}}</td>
                         <td class="td-clickable" (click)="showModalDialog()">{{test.test_name}}</td>
                         <td class="td-clickable" (click)="showModalDialog()">{{test.test_description}}</td>
                         <td class="td-clickable" (click)="showModalDialog()">{{test.operating_systems}}</td>
@@ -69,9 +67,9 @@
                 <ng-template pTemplate="header">
                     <tr>
                         <th>ID</th>
-                        <th>Name</th>
-                        <th>Date Executed</th>
-                        <th>Status</th>
+                        <th pSortableColumn="id">Name <p-sortIcon field="id"></p-sortIcon></th>
+                        <th pSortableColumn="date">Date Executed <p-sortIcon field="date"></p-sortIcon></th>
+                        <th pSortableColumn="value">Status <p-sortIcon field="value"></p-sortIcon></th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-result>
