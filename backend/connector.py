@@ -1,5 +1,7 @@
 import json
 import os
+from splitTests import dictRules
+from splitTests import UniformDictList
 
 # Easier to just write tests selected to a file?
 # Unsure how to grab the array from json class currently, so this is what I've got
@@ -35,8 +37,9 @@ def sendResults(file):
 
 def getTests(file): 
     with open(file, "r") as f:
-        tests = json.load(f)
-    return tests
+        tests = UniformDictList(json.load(f))
+    listOfTests = tests[:]["test_id"]
+    return listOfTests
 
 
 def main():
