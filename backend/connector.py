@@ -1,7 +1,9 @@
 import json
+import os
 
 # Easier to just write tests selected to a file?
 # Unsure how to grab the array from json class currently, so this is what I've got
+
 # Basic json array to test things with
 data = {}
 data['testInfo'] = []
@@ -20,16 +22,16 @@ data['testInfo'].append({
     'value': "Failure"
 })
 
-def getResults(file):
+def sendResults(file):
+    cwd = os.getcwd()
+    writepath = cwd + "\\backend\\results.json"
+    mode = 'a+' if os.path.exists(writepath) else 'w+'
     with open(file, "r") as f:
         data = json.load(f)
-    return data
-
-
-def sendResults(file):
-    with open(file, "w") as outfile:
-        json.dump(file, outfile)
-    return outfile
+    with open(writepath, mode) as outfile:
+        json.dump(data, outfile, indent=2)
+        outfile.write('\n')
+    return writepath
 
 def getTests(file): 
     with open(file, "r") as f:
@@ -38,10 +40,9 @@ def getTests(file):
 
 
 def main():
-    test = getResults("C:/Users/coleg/OneDrive/Desktop/VisualStudio/CS481/s21-team-blue/backend/testingInfo.json")
-    print(test)
-    print(sendResults("C:/Users/coleg/OneDrive/Desktop/VisualStudio/CS481/s21-team-blue/backend/testingInfo.json"))
-    temp = getTests("C:/Users/coleg/OneDrive/Desktop/VisualStudio/CS481/s21-team-blue/backend/testingInfo.json")
+    cwd = os.getcwd()
+    print(sendResults(cwd + "\\backend\\testingInfo.json"))
+    temp = getTests(cwd + "\\backend\\testingInfo.json")
     print(temp)
 
 main()
