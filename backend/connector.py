@@ -41,11 +41,18 @@ def getTests(file):
     listOfTests = tests[:][:]
     return listOfTests
 
+def getTestIDs(file):
+    with open(file, "r") as f:
+        tests = json.load(f)
+    testIDs = [test["test_id"] for test in tests]
+    return testIDs
 
 def main():
     cwd = os.getcwd()
     print(sendResults(cwd + "\\backend\\testingInfo.json"))
     temp = getTests(cwd + "\\backend\\testingInfo.json")
     print(temp)
+    temp2 = getTestIDs(cwd + "\\backend\\testingInfo.json")
+    print(temp2)
 
 main()

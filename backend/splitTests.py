@@ -2,7 +2,7 @@ class dictRules:
     """
     A special class for getting and setting multiple dictionaries
     simultaneously. This class is not meant to be instantiated
-    in its own, but rather in response to a slice operation on UniformDictList.
+    on its own, but rather in response to a slice operation on UniformDictList.
     """
 
     def __init__(parent, slice):
