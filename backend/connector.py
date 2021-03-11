@@ -38,7 +38,7 @@ def sendResults(file):
 def getTests(file): 
     with open(file, "r") as f:
         tests = UniformDictList(json.load(f))
-    listOfTests = tests[:]["test_id"]
+    listOfTests = tests[:][:]
     return listOfTests
 
 
