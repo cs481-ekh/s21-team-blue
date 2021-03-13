@@ -25,7 +25,7 @@ To start the Node Express Server, navigate to `./backend/`. You should now see a
 `npm start` (Starts the Node Express Server)
 
 ### Access
-To access the webpage, go to http://localhost:4200 in any web browser, and you should see the homepage.
+To access the webpage, go to http://localhost:3000 in any web browser, and you should see the homepage.
 
 ### DNSmasq Setup
 Update the RaspberryPi before moving forward with these terminal commands:
