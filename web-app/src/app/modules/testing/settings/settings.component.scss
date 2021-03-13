@@ -1,0 +1,41 @@
+.wrapper {
+    width: 100%;
+    height: 100vh;
+    font-size: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wrapper .settings-icon {
+    position: absolute;
+    left: 50px;
+    top: 50px;
+}
+
+.wrapper .back-icon {
+    position: relative;
+    align-self: flex-start;
+}
+
+.os, .ip {
+    left: 500px;
+    top: 20%;
+    width: 700px;
+    height: 700px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+i {
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+i:hover {
+    cursor: pointer;
+    color: #5fb8ee;
+}

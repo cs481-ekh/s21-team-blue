@@ -2,18 +2,17 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TestingMainComponent } from './testing-main/testing-main.component';
 import { TestingRoutingModule } from './testing.routing';
-import { TableModule } from 'primeng/table';
-import { ButtonModule } from 'primeng/button';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { SettingsComponent } from './settings/settings.component';
+import { SharedModule } from 'src/app/shared/modules/shared.module';
+
 
 @NgModule({
-  declarations: [TestingMainComponent],
+  declarations: [TestingMainComponent, SettingsComponent],
   imports: [
     CommonModule,
     TestingRoutingModule,
-    TableModule,
-    ButtonModule,
-    ProgressSpinnerModule
+    SharedModule
+
   ]
 })
 export class TestingModule { }

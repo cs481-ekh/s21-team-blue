@@ -8,10 +8,10 @@ do
     pylint3 $pyfile
 done
 
-# Angular app build
+# Angular app production build
 cd web-app
 npm ci
-npm run build --if-present
+npm run pro-build --if-present
 cd # Return to root directory
 
 # Node Express Server build

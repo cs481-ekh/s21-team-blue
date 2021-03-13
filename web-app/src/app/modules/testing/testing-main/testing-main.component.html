@@ -1,7 +1,7 @@
 <div class="wrapper">
+    <i class="pi pi-cog settings-icon" title="Settings" [routerLink]="['/main/settings']" style="font-size: 3rem;"></i>
     <div class="test-area">
-
-        <!-- Main test list -->
+         <!-- Main test list -->
         <div class="test-list" *ngIf="testsView">
             <p-table [value]="tests"
             [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [paginator]="true"
@@ -17,27 +17,34 @@
                         <th style="width: 3rem">
                             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                         </th>
-                        <th>ID</th>
-                        <th>Name</th>
+                        <th pSortableColumn="test_name">Name <p-sortIcon field="test_name"></p-sortIcon></th>
                         <th>Description</th>
-                        <th>Operating Systems</th>
+                        <th pSortableColumn="operating_systems">Operating Systems <p-sortIcon field="operating_systems"></p-sortIcon></th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-test>
+                    <p-dialog header="{{test.test_name}}" [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
+                    [draggable]="false" [resizable]="false" [dismissableMask]="true">
+                    <p class="p-m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        <ng-template pTemplate="footer">
+                        <p-button icon="pi pi-check" (click)="displayModal=false" label="Ok" styleClass="p-button-text"></p-button>
+                        </ng-template>
+                    </p-dialog>
                     <tr>
                         <td>
                             <!-- Disable if OS isn't compatible -->
                             <p-tableCheckbox [value]="test"></p-tableCheckbox>
                         </td>
-                        <td>{{test.test_id}}</td>
-                        <td>{{test.test_name}}</td>
-                        <td>{{test.test_description}}</td>
-                        <td>{{test.operating_systems}}</td>
+                        <td class="td-clickable" (click)="showModalDialog()">{{test.test_name}}</td>
+                        <td class="td-clickable" (click)="showModalDialog()">{{test.test_description}}</td>
+                        <td class="td-clickable" (click)="showModalDialog()">{{test.operating_systems}}</td>
                     </tr>
                 </ng-template>
             </p-table>
-            <button *ngIf="testsRun" style="margin-top: 5px;" pButton pRipple type="button" label="View Last Test Results" (click)="resultView()"></button>
-            <button style="float: right; margin-top: 5px;" pButton pRipple type="button" label="Run Selected Tests" (click)="runTests()"></button>
+            <button *ngIf="testsRun" style="margin-top: 5px;" pButton pRipple type="button" label="View Previous Test Results" (click)="resultView()"></button>
+            <button style="float: right; margin-top: 5px;" pButton pRipple type="button" [disabled]="selectedTests == null || selectedTests[0] == undefined" label="Run Selected Tests" (click)="runTests()"></button>
         </div>
 
         <!-- Loading screen while tests are running -->
@@ -50,7 +57,7 @@
         <div class="test-results" *ngIf="resultsView">
             <p-table [value]="testResults"
             [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [paginator]="true"
-            dataKey="result_test_id" styleClass="p-datatable-tests"
+            dataKey="test_id" styleClass="p-datatable-tests"
             [filterDelay]="0" [rows]="10" [rowHover]="true">
                 <ng-template pTemplate="caption">
                     <div class="table-header">
@@ -60,23 +67,30 @@
                 <ng-template pTemplate="header">
                     <tr>
                         <th>ID</th>
-                        <th>Name</th>
-                        <th>Date Executed</th>
-                        <th>Status</th>
+                        <th pSortableColumn="id">Name <p-sortIcon field="id"></p-sortIcon></th>
+                        <th pSortableColumn="date">Date Executed <p-sortIcon field="date"></p-sortIcon></th>
+                        <th pSortableColumn="value">Status <p-sortIcon field="value"></p-sortIcon></th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-result>
-                    <!-- Make row clickable so they can view more detailed info about the test results -->
-                    <!-- <tr (click)="resultPopup(result)>" -->
+                    <p-dialog [dismissableMask]="true" header="{{result.test_id}}" [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
+                    [draggable]="false" [resizable]="false">
+                    <p class="p-m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        <ng-template pTemplate="footer">
+                        <p-button icon="pi pi-check" (click)="displayModal=false" label="Ok" styleClass="p-button-text"></p-button>
+                        </ng-template>
+                    </p-dialog>
                     <tr>
-                        <td>{{result.result_id}}</td>
-                        <td>{{result.result_test.test_name}}</td>
-                        <td>{{result.result_date}}</td>
-                        <td>{{result.result_value}}</td>
+                        <td class="td-clickable" (click)="showModalDialog()">{{result.id}}</td>
+                        <td class="td-clickable" (click)="showModalDialog()">{{result.test_id}}</td>
+                        <td class="td-clickable" (click)="showModalDialog()">{{result.date}}</td>
+                        <td class="td-clickable" (click)="showModalDialog()">{{result.value}}</td>
                     </tr>
                 </ng-template>
             </p-table>
-            <button style="float: right; margin-top: 5px;" pButton pRipple type="button" label="Return to test selection" (click)="testView()"></button>
+            <button style="float: right; margin-top: 5px;" pButton pRipple type="button" label="Return to Test Selection" (click)="testView()"></button>
         </div>
     </div>
 </div>

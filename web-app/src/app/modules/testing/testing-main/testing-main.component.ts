@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { IpAddress, OperatingSystem } from 'src/app/shared/models/system-info-models';
 import { TestResults, Test } from 'src/app/shared/models/test-models'; 
+import { ApiService } from 'src/app/shared/services/api.service';
+import { DataService } from 'src/app/shared/services/data.service';
 
 @Component({
   selector: 'app-testing-main',
@@ -15,13 +18,31 @@ export class TestingMainComponent implements OnInit {
   resultsView: boolean = false;
   testsRun: boolean = false;
   loadingView: boolean = false;
+  os: OperatingSystem;
+  ip: IpAddress;
+  displayModal: boolean = false;
 
-  constructor() { }
+  singleTestResult: TestResults;
+
+  constructor(private _dataService: DataService, private _apiService: ApiService) { }
 
   ngOnInit(): void {
     this.fillTests();
     this.fillTestResults();
+    var possibleOS = this._dataService.getOS();
+    if(possibleOS !== null) this.os = possibleOS;
+    if(this._dataService.getTestResultsList() !== null) {
+      var tr = this._dataService.getTestResultsList();
+      if(tr !== null) {
+        this.testResults = tr;
+        this.testsRun = true;
+      }
+    }
   }
+
+  showModalDialog() {
+    this.displayModal = true;
+}
 
   fillTests(): void {
     this.tests = [
@@ -439,25 +460,25 @@ export class TestingMainComponent implements OnInit {
   fillTestResults(): void {
     this.testResults = [
       {
-        result_id: '1',
-        result_test: this.tests[0],
-        result_description: 'result1 description',
-        result_date: '2020-01-07',
-        result_value: 'Failed'
+        id: '1',
+        test_id: '7',
+        description: 'result1 description',
+        date: '2020-01-07',
+        value: 'Failed'
       },
       {
-        result_id: '2',
-        result_test: this.tests[1],
-        result_description: 'result2 description',
-        result_date: '2020-02-07',
-        result_value: 'Failed'
+        id: '2',
+        test_id: '8',
+        description: 'result2 description',
+        date: '2020-02-07',
+        value: 'Failed'
       },
       {
-        result_id: '3',
-        result_test: this.tests[1],
-        result_description: 'result3 description',
-        result_date: '2020-02-07',
-        result_value: 'Success'
+        id: '3',
+        test_id: '31',
+        description: 'result3 description',
+        date: '2020-02-07',
+        value: 'Success'
       }
     ]
   }
@@ -465,12 +486,28 @@ export class TestingMainComponent implements OnInit {
   /** 
    * Execute the selected tests
    */
-  runTests(): void {
-    //executeSelected(this.selectedTests);
-    
+  runTests(): void {    
     // Flip the screen to show results
     this.testsView = false;
     this.loadingView = true;
+
+    var request: string[] = [];
+
+    var possibleIP = this._dataService.getIP();
+    if(possibleIP !== null) this.ip = possibleIP;
+
+    request.push(this.ip.ip_address); // Add the IP address as the first index in the string array.
+
+    this.selectedTests.forEach(function(test) {
+      request.push(test.test_id);
+    });
+
+    this._apiService.runTests(request).subscribe((response: TestResults[]) => {
+      this.testResults = response;
+      this.testsRun = true;
+      this.resultView();
+    }); 
+
   }
 
   /**
@@ -489,6 +526,7 @@ export class TestingMainComponent implements OnInit {
    */
   resultView(): void {
     this.testsView = false;
+    this.loadingView = false;
     this.resultsView = true;
   }
 

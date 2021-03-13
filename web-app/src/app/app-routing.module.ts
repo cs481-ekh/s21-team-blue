@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { NotFoundComponent } from './errors/not-found/not-found.component';
+import { RouteGuard } from './shared/guards/route-guard.guard';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'setup',
+    redirectTo: 'main',
     pathMatch: 'full'
   },
   {
@@ -14,14 +16,14 @@ const routes: Routes = [
   },
   {
     path: 'main',
+    canActivate: [RouteGuard],
     loadChildren: () =>
       import('./modules/testing/testing.module').then(m => m.TestingModule)
   },
-  // {
-  //   path: '**',
-  //   redirectTo: '404',
-  //   component: PageNotFoundComponent
-  // }
+  {
+    path: '**',
+    component: NotFoundComponent
+  }
 ];
 
 @NgModule({
