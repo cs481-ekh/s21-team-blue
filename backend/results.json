@@ -1,0 +1,48 @@
+[
+  {
+    "id": 1,
+    "test_id": 7,
+    "description": "1000 ports scanned, 0 open",
+    "date": "2020-02-10",
+    "value": "Success"
+  },
+  {
+    "id": 2,
+    "test_id": 8,
+    "description": "1001 ports scanned, 0 open",
+    "date": "2020-03-01",
+    "value": "Failure"
+  }
+]
+[
+  {
+    "id": 1,
+    "test_id": 7,
+    "description": "1000 ports scanned, 0 open",
+    "date": "2020-02-10",
+    "value": "Success"
+  },
+  {
+    "id": 2,
+    "test_id": 8,
+    "description": "1001 ports scanned, 0 open",
+    "date": "2020-03-01",
+    "value": "Failure"
+  }
+]
+[
+  {
+    "id": 1,
+    "test_id": 7,
+    "description": "1000 ports scanned, 0 open",
+    "date": "2020-02-10",
+    "value": "Success"
+  },
+  {
+    "id": 2,
+    "test_id": 8,
+    "description": "1001 ports scanned, 0 open",
+    "date": "2020-03-01",
+    "value": "Failure"
+  }
+]
