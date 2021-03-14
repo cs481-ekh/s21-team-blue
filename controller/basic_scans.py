@@ -53,10 +53,16 @@ def port_scan(test_id, host_ip, res_id):
         val = "Info"
 
     # return if there are no tcp ports dectected
+    if not scanner.all_hosts():
+        desc = "No hosts found"
+        val = "Info"
+        return create_json_result(res_id, test_id, desc, date, val)
+
     host = scanner.all_hosts()[0]
     if "tcp" not in scanner[host].all_protocols():
         desc = "No open TCP ports found"
         val = "Info"
+        return create_json_result(res_id, test_id, desc, date, val)
 
     open_ports = {}
     scanned_ports = scanner[host][protocol].keys()
