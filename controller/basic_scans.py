@@ -5,41 +5,39 @@ Performs basic scans on a given host.
 import json
 from datetime import datetime
 import nmap
+import sys
 
+# A list of all available tests. Update every time
+# a new test is created.
+def test_list():
+    tests = []
+    tests.append(create_json_test(1,"Nmap Port Scan", "Common port scan", "Any"))
+    return tests
 
-def run_basic_scans(host_ip):
-    """
-    Runs basic scans on a given host.
-    """
+def create_json_test(id, name, desc, os_list):
+    return {
+        "test_id": str(id),
+        "test_name": name,
+        "test_description": desc,
+        "operating_systems": os_list,
+    }
+
+# Creates the result object in JSON format
+def create_json_result(res_id, test_id, desc, date, val):
+    return {
+        "id": str(res_id),
+        "test_id": str(test_id),
+        "description": desc,
+        "date": date.strftime("%b %d %Y %H:%M:%S"),
+        "value" : val
+    }
+
+# Basic nmap scan of common TCP ports on a given host
+def port_scan(test_id, host_ip, res_id):
 
     date = datetime.now()
-
-    port_scan_result = {
-        "test": {
-            "id": "testid",
-            "name": "tcp port scan",
-            "description": "a scan of all tcp ports",
-            "operating_systems": ["windows", "linux", "osx"]
-            },
-        "results": {
-            "id": "testid",
-            "test_id": "test test_id",
-            "description": "a scan of all tcp ports",
-            "date": str(date),
-            },
-        }
-    port_scan_result["results"]["value"] = port_scan(host_ip)
-
-    basic_scans_result = {
-        "port_scan": port_scan_result,
-        }
-
-    return json.dumps(basic_scans_result)
-
-def port_scan(host_ip):
-    """
-    Scans all TCP ports on a given host.
-    """
+    val = ""
+    desc = ""
 
     # all TCP ports
     #port_range = "0-65535"
@@ -51,11 +49,20 @@ def port_scan(host_ip):
 
     # return if there are no detected hosts
     if not scanner.all_hosts():
-        return []
+        desc = "No hosts detected"
+        val = "Info"
+
     # return if there are no tcp ports dectected
+    if not scanner.all_hosts():
+        desc = "No hosts found"
+        val = "Info"
+        return create_json_result(res_id, test_id, desc, date, val)
+
     host = scanner.all_hosts()[0]
     if "tcp" not in scanner[host].all_protocols():
-        return []
+        desc = "No open TCP ports found"
+        val = "Info"
+        return create_json_result(res_id, test_id, desc, date, val)
 
     open_ports = {}
     scanned_ports = scanner[host][protocol].keys()
@@ -64,8 +71,32 @@ def port_scan(host_ip):
         port_prod = scanner[host][protocol][port]["product"]
         open_ports[port] = port_name + ", " + port_prod
 
-    return open_ports
+    desc = str(open_ports)
+    val = "Success"
+    return create_json_result(res_id,test_id,desc,date,val)
+
+# Mapping of Test IDs to functions
+def run_test(id, ip, idx):
+    tests = {
+        1: port_scan(1, ip, idx),
+    }
+    return tests.get(id, "ERROR: Could not find a test with the given ID")
+
+# Loop through all of the Test IDs, run the corresponding tests, and return the results
+def execute_tests(ip, tests):
+    results = []
+    idx = 0
+    for id in tests:
+        results.append(run_test(int(id), ip, idx))
+        idx += 1
+    return results
 
 if __name__ == "__main__":
-    ip = input()
-    print(run_basic_scans(ip))
+    args = sys.argv[1:] # Ignore the filename argument
+    if args[0] == "get-test-list":
+        print(json.dumps(test_list()))
+        exit(0)
+    ip = args[0] # Grab the IP address
+    test_ids = args[1].split(',') # Store the list of Test IDs as an array
+    results = execute_tests(ip, test_ids) # Execute the tests and store the results
+    print(json.dumps(results))

@@ -1,6 +1,6 @@
 <div class="wrapper">
     <i class="pi pi-cog settings-icon" title="Settings" [routerLink]="['/main/settings']" style="font-size: 3rem;"></i>
-    <div class="test-area">
+    <div *ngIf="displayTestArea" class="test-area">
          <!-- Main test list -->
         <div class="test-list" *ngIf="testsView">
             <p-table [value]="tests"
@@ -50,7 +50,7 @@
         <!-- Loading screen while tests are running -->
         <div class="loading-screen" *ngIf="loadingView">
             <h2>Running Tests...</h2>
-            <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner" strokeWidth="5" animationDuration=".9s" (click)="doneLoadingTest()"></p-progressSpinner>
+            <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner" strokeWidth="5" animationDuration=".9s"></p-progressSpinner>
         </div>
 
         <!-- Test results displayed after tests are run -->
@@ -67,7 +67,7 @@
                 <ng-template pTemplate="header">
                     <tr>
                         <th>ID</th>
-                        <th pSortableColumn="id">Name <p-sortIcon field="id"></p-sortIcon></th>
+                        <th pSortableColumn="test_name">Name <p-sortIcon field="test_name"></p-sortIcon></th>
                         <th pSortableColumn="date">Date Executed <p-sortIcon field="date"></p-sortIcon></th>
                         <th pSortableColumn="value">Status <p-sortIcon field="value"></p-sortIcon></th>
                     </tr>
@@ -75,16 +75,14 @@
                 <ng-template pTemplate="body" let-result>
                     <p-dialog [dismissableMask]="true" header="{{result.test_id}}" [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
                     [draggable]="false" [resizable]="false">
-                    <p class="p-m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <p class="p-m-0">{{result.description}}</p>
                         <ng-template pTemplate="footer">
                         <p-button icon="pi pi-check" (click)="displayModal=false" label="Ok" styleClass="p-button-text"></p-button>
                         </ng-template>
                     </p-dialog>
                     <tr>
                         <td class="td-clickable" (click)="showModalDialog()">{{result.id}}</td>
-                        <td class="td-clickable" (click)="showModalDialog()">{{result.test_id}}</td>
+                        <td class="td-clickable" (click)="showModalDialog()">{{tests[0].test_name}}</td>
                         <td class="td-clickable" (click)="showModalDialog()">{{result.date}}</td>
                         <td class="td-clickable" (click)="showModalDialog()">{{result.value}}</td>
                     </tr>

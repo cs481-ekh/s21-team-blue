@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const RequestIp = require('@supercharge/request-ip');
 const { networkInterfaces } = require('os');
+var sys = require('util')
 
 var app = express();
 var ip;
@@ -29,6 +30,14 @@ app.get('/api/get-client-ip', (req, res) => {
   }
 });
 
+app.get('/api/get-test-list', (req, res) => {
+  var spawn = require('child_process').spawn;
+  proc = spawn('python3', ['../controller/basic_scans.py', 'get-test-list'])
+  proc.stdout.on('data', function(data) {
+    res.send(JSON.parse(data));
+  })
+})
+
 // Run one or more tests and return the TestResults
 app.post('/api/run-tests', (req, res) => {
   request = req.body;
@@ -38,34 +47,13 @@ app.post('/api/run-tests', (req, res) => {
   // one index to the left to fill that gap. The array will now only contain 
   // Test IDs.
   ip_address = request.shift(); 
-
-  // 'request' is a string[] of Test IDs. Send this array to the controller,
-  // have it loop through each id, run the corresponding test, and return the 
-  // results in a TestResults[] in the same order as the Test IDs.
-  request.forEach(function(test_id) {
-    console.log(test_id); // Testing purposes only; delete on production
-  });
-
-  // Get today's date. Delete when results are actually returned from the Python controller.
-  today = new Date();
-  date = today.getFullYear() + '-' + today.getMonth() + '-' + today.getDay();
   
-  // Sample results - Delete when results are actually returned from the Python controller
-  results = '[{' +
-    '"id" : "1", ' +
-    '"test_id" : "7", ' +
-    '"description" : "1000 ports scanned, 0 open", ' +
-    '"date" : "' + date + '", ' + 
-    '"value" : "Success"' +
-  '},' + 
-  '{' +
-    '"id" : "2", ' +
-    '"test_id" : "8", ' +
-    '"description" : "1001 ports scanned, 0 open", ' +
-    '"date" : "' + date + '", ' + 
-    '"value" : "Failure"' +
-  '}]';
-  res.send(JSON.parse(results)); // Return the results of the tests.
+  results = "";
+  var spawn = require('child_process').spawn;
+  proc = spawn('python3', ['../controller/basic_scans.py', ip_address, request]);
+  proc.stdout.on('data', function(data) {
+    res.send(JSON.parse(data));
+  });
 });
 
 app.all('/*', function(req, res, next) {

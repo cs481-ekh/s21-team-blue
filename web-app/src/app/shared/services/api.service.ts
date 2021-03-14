@@ -2,8 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { IpAddress, OperatingSystem } from '../models/system-info-models';
-import { TestResults } from '../models/test-models';
+import { Test, TestResults } from '../models/test-models';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +11,11 @@ import { TestResults } from '../models/test-models';
 export class  ApiService {
  
   constructor(private http: HttpClient) {}
+
+  getTestList(): Observable<Test[]> {
+    return this.http.get<Test[]>('/api/get-test-list')
+    .pipe(catchError(this.errorHandler));
+  }
 
   /**
    * Get the client IP from the server and store it in local storage
