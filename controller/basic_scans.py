@@ -11,7 +11,9 @@ import sys
 # a new test is created.
 def test_list():
     tests = []
-    tests.append(create_json_test(1,"Nmap Port Scan", "Common port scan", "Any"))
+    tests.append(create_json_test(1,"Nmap Port Scan - Common", "Common port scan", "Any"))
+    tests.append(create_json_test(2,"Nmap Port Scan - Full", "Full port scan", "Any"))
+    tests.append(create_json_test(3,"Eternal Blue Scan", "Searches for Eternal Blue vulnerability", "Windows 7, Windows 10"))
     return tests
 
 def create_json_test(id, name, desc, os_list):
@@ -100,7 +102,7 @@ def run_test(id, ip, idx):
     tests = {
         1: basic_port_scan(1, ip, idx),
         2: full_port_scan(2, ip, idx),
-        3: eternal_blue_scan(2, ip, idx),
+        3: eternal_blue_scan(3, ip, idx),
     }
     return tests.get(id, "ERROR: Could not find a test with the given ID")
 
