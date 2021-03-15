@@ -23,7 +23,7 @@
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-test>
-                    <p-dialog header="{{test.test_name}}" [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
+                    <!-- <p-dialog header="{{test.test_name}}" [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
                     [draggable]="false" [resizable]="false" [dismissableMask]="true">
                     <p class="p-m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
                         laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
@@ -31,15 +31,15 @@
                         <ng-template pTemplate="footer">
                         <p-button icon="pi pi-check" (click)="displayModal=false" label="Ok" styleClass="p-button-text"></p-button>
                         </ng-template>
-                    </p-dialog>
+                    </p-dialog> -->
                     <tr>
                         <td>
                             <!-- Disable if OS isn't compatible -->
                             <p-tableCheckbox [value]="test"></p-tableCheckbox>
                         </td>
-                        <td class="td-clickable" (click)="showModalDialog()">{{test.test_name}}</td>
-                        <td class="td-clickable" (click)="showModalDialog()">{{test.test_description}}</td>
-                        <td class="td-clickable" (click)="showModalDialog()">{{test.operating_systems}}</td>
+                        <td class="td-clickable">{{test.test_name}}</td>
+                        <td class="td-clickable">{{test.test_description}}</td>
+                        <td class="td-clickable">{{test.operating_systems}}</td>
                     </tr>
                 </ng-template>
             </p-table>
@@ -66,14 +66,13 @@
                 </ng-template>
                 <ng-template pTemplate="header">
                     <tr>
-                        <th>ID</th>
                         <th pSortableColumn="test_name">Name <p-sortIcon field="test_name"></p-sortIcon></th>
                         <th pSortableColumn="date">Date Executed <p-sortIcon field="date"></p-sortIcon></th>
                         <th pSortableColumn="value">Status <p-sortIcon field="value"></p-sortIcon></th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-result>
-                    <p-dialog [dismissableMask]="true" header="{{result.test_id}}" [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
+                    <p-dialog [dismissableMask]="true" header="{{result.value}}" [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
                     [draggable]="false" [resizable]="false">
                     <p class="p-m-0">{{result.description}}</p>
                         <ng-template pTemplate="footer">
@@ -81,8 +80,7 @@
                         </ng-template>
                     </p-dialog>
                     <tr>
-                        <td class="td-clickable" (click)="showModalDialog()">{{result.id}}</td>
-                        <td class="td-clickable" (click)="showModalDialog()">{{tests[0].test_name}}</td>
+                        <td class="td-clickable" (click)="showModalDialog()">{{tests[result.test_id-1].test_name}}</td>
                         <td class="td-clickable" (click)="showModalDialog()">{{result.date}}</td>
                         <td class="td-clickable" (click)="showModalDialog()">{{result.value}}</td>
                     </tr>
