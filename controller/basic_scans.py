@@ -100,11 +100,11 @@ def port_scan(test_id, host_ip, res_id, port_range):
 # Mapping of Test IDs to functions
 def run_test(id, ip, idx):
     tests = {
-        1: basic_port_scan(1, ip, idx),
-        2: full_port_scan(2, ip, idx),
-        3: eternal_blue_scan(3, ip, idx),
+        1: basic_port_scan,
+        2: full_port_scan,
+        3: eternal_blue_scan,
     }
-    return tests.get(id, "ERROR: Could not find a test with the given ID")
+    return tests[id](id, ip, idx)
 
 # Loop through all of the Test IDs, run the corresponding tests, and return the results
 def execute_tests(ip, tests):
@@ -122,6 +122,5 @@ if __name__ == "__main__":
         exit(0)
     ip = args[0] # Grab the IP address
     test_ids = args[1].split(',') # Store the list of Test IDs as an array
-    #print("test_ids: " + str(test_ids))
     results = execute_tests(ip, test_ids) # Execute the tests and store the results
     print(json.dumps(results))
