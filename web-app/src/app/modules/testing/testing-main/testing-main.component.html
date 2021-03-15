@@ -86,7 +86,8 @@
                     </tr>
                 </ng-template>
             </p-table>
-            <button style="float: right; margin-top: 5px;" pButton pRipple type="button" label="Return to Test Selection" (click)="testView()"></button>
+            <button *ngIf="testsRun" style="margin-top: 5px;" pButton pRipple type="button" label="View Previous Test Results" (click)="resultView()"></button>
+            <button *ngIf="testsRun" style="float: right; margin-top: 5px;" pButton pRipple type="button" label="Save Results to File" (click)="saveFile()"></button>
         </div>
     </div>
 </div>

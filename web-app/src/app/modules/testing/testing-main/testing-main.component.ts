@@ -3,7 +3,7 @@ import { IpAddress, OperatingSystem } from 'src/app/shared/models/system-info-mo
 import { TestResults, Test } from 'src/app/shared/models/test-models'; 
 import { ApiService } from 'src/app/shared/services/api.service';
 import { DataService } from 'src/app/shared/services/data.service';
-
+import { saveAs } from 'file-saver';
 @Component({
   selector: 'app-testing-main',
   templateUrl: './testing-main.component.html',
@@ -70,6 +70,7 @@ export class TestingMainComponent implements OnInit {
 
     this._apiService.runTests(request).subscribe((response: TestResults[]) => {
       this.testResults = response;
+      this._dataService.setTestResultsList(this.testResults);
       this.testsRun = true;
       this.resultView();
     }); 
@@ -96,6 +97,24 @@ export class TestingMainComponent implements OnInit {
     this.resultsView = true;
   }
 
+  generateFileText(): string {
+    var t = '';
+    t = 'os-name,os-value,ip\n';
+    t += '"' + this.os.name + '","' + this.os.value + '",' + this.ip.ip_address + '\n';
+    this.testResults.forEach(res => {
+      t += '\n';
+      t += res.id + ',' + res.test_id + ',' + res.description + ',' + res.date + ',' + res.value;
+    });
+    return t;
+  }
+
+  saveFile(): void {
+    var text: string = this.generateFileText();
+    const blob = new Blob([text], { type: 'text/plain' });
+    const fileName = 'test_history.dat';
+    saveAs(blob, fileName);
+  }
+
   /**
    * Display a more detailed description of the selected
    * test results in the form of a popup
@@ -114,3 +133,5 @@ export class TestingMainComponent implements OnInit {
   }
 
 }
+
+
