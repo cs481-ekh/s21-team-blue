@@ -47,6 +47,7 @@ export class TestingMainComponent implements OnInit {
         this.testsRun = true;
       }
     }
+    if(this.testResults == null) this.testResults = [];
   }
 
   showModalDialog(desc: string, val: string) {
@@ -80,6 +81,7 @@ export class TestingMainComponent implements OnInit {
     });
 
     this._apiService.runTests(request).subscribe((response: TestResults[]) => {
+      
       // Append new test results to the testResults variable
       response.forEach(res => {
         this.testResults.push(res);
