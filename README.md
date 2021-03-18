@@ -4,6 +4,10 @@
 # PiRate
 BSU CS481 Capstone Project
 
+### Dependencies
+
+`sudo apt-get install python3-nmap`
+
 ## Running Angular App with Node Express
 ### Installation
 To run the Angular App with the Node Express Server, you need to install NodeJS, NPM, and the Angular CLI (Command-Line Interface). [Here](https://nodejs.org/en/) is a link to download NodeJS, which also installs npm. 
@@ -57,3 +61,18 @@ Check that DNSutils is working by running:
   
 You should get another large printout of information with the response time being around 50-100ms if you pinged google.com
 Running the command again you should see that the response time is now at just about 0ms.
+
+### Plugin API
+
+To create a test plugin, all you need to do is create a python class for it. Create a python file called `test-name.py`
+where `test-name` is the name of your plugin e.g. 'Eternal Blue'. In this python file you'll create a class called
+`test-name`. This class needs four things.
+
+  1. A field called `name` which is a string containing the name of the test.
+  2. A field called `desc` which is a short description of the test.
+  3. A field called `oses` which is a list of Operating Systems the test supports.
+  4. A method called `scan()` which accepts a single argument, the host_ip to scan in the form of a string, and returns
+     a string containing the result of the scan.
+
+After you've created this python file, place it in the `controller/tests` directory of the Pirate installation. The 
+controller will automatically detect it and you'll be able to select and run it through the web API.
