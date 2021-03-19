@@ -1,3 +1,15 @@
+:host ::ng-deep .p-button {
+            background-color: #08aaf0;
+}
+
+:host ::ng-deep .p-button:enabled:hover {
+        background-color: #065374;
+}
+
+:host ::ng-deep .p-fileupload-choose:hover {
+    background-color: #065374;
+}
+
 .welcome {
     width: 100%;
     height: 10vh;
@@ -7,31 +19,112 @@
     text-align: center;
 }
 
-.content {
-    width: 100%;
-    height: 80vh;
-    display: flex;
-    align-items: stretch;
+// START: Card styling
+.main { 
+    display: grid; 
+    place-items: center; 
+} 
+
+.container { 
+    display: grid; 
+    grid-gap: 3rem; 
+    padding: 1rem; 
+    grid-template-columns: repeat(2, 1fr); 
+} 
+.card { 
+    position: relative; 
+    display: flex; 
+    align-items: center; 
     justify-content: center;
-    flex-direction: row;
-}
+    overflow: hidden; 
+    text-align: center; 
+    color: white; 
+    border-radius: 10px; 
+    height: 700px; 
+} 
+  
+.card:before {
+    content: ""; 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 110%; 
+    background-size: cover; 
+    background-position: 0 0; 
+} 
+  
+.card:after { 
+    color: black;
+    content: ""; 
+    display: block; 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 200%; 
+    background-image: linear-gradient(  
+        to bottom, rgba(0, 0, 0, 0) 0%,  
+        rgba(0, 0, 0, 0.009) 11.7%,  
+        rgba(0, 0, 0, 0.034) 22.1%,  
+        rgba(0, 0, 0, 0.072) 31.2%,  
+        rgba(0, 0, 0, 0.123) 39.4%,  
+        rgba(0, 0, 0, 0.182) 46.6%,  
+        rgba(0, 0, 0, 0.249) 53.1%,  
+        rgba(0, 0, 0, 0.32) 58.9%,  
+        rgba(0, 0, 0, 0.394) 64.3%, 
+        rgba(0, 0, 0, 0.468) 69.3%,  
+        rgba(0, 0, 0, 0.54) 74.1%,  
+        rgba(0, 0, 0, 0.607) 78.8%,  
+        rgba(0, 0, 0, 0.668) 83.6%,  
+        rgba(0, 0, 0, 0.721) 88.7%,  
+        rgba(0, 0, 0, 0.762) 94.1%,  
+        rgba(0, 0, 0, 0.79) 100%); 
+    transform: translateY(-50%); 
 
+} 
+  
+.card:before { 
+    background-image: linear-gradient( 
+        to bottom right, #00608a, #00608a);  
+} 
+  
 
-.new-client, .returning-client {
-    font-size: 24px;
-    width: 600px;
-    height: 500px;
-    margin-top: 50px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    border: 4px solid rgb(8, 72, 109);
-}
-
-p {
-    text-align: center;
-    margin: 50px 50px 20px 50px;
-}
+.content { 
+    position: relative; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    width: 100%; 
+    padding: 1rem; 
+    z-index: 1; 
+} 
+  
+.card:after { 
+    transform: translateY(0); 
+} 
+  
+.card:hover, 
+.card:focus-within { 
+    color: white;
+    align-items: center; 
+} 
+  
+.card:hover:before, 
+.card:focus-within:before { 
+    transform: translateY(-4%); 
+} 
+  
+.card:hover:after, 
+.card:focus-within:after { 
+    transform: translateY(-50%); 
+} 
+  
+.card:hover .content, 
+.card:focus-within .content { 
+    transform: translateY(0); 
+} 
+// END: Card styling
 
 button {
     align-self: center;
@@ -52,64 +145,3 @@ form input {
     margin: 30px 30px 0px 30px;
     text-align: center;
 }
-
-.new-client {
-    left: 0%;
-}
-
-.returning-client {
-    left: 50%;
-}
-
-@media screen and (min-width: 2001px) {
-    .new-client, .returning-client {
-        font-size: 40px;
-        width: 800px;
-        height: 900px;
-    }
-}
-
-@media screen and (max-width: 2000px) {
-    .new-client, .returning-client {
-        font-size: 32px;
-        width: 800px;
-        height: 700px;
-    }
-}
-
-@media screen and (max-width: 1500px) {
-    .new-client, .returning-client {
-        font-size: 30px;
-        width: 450px;
-        height: 350px;
-    }
-}
-
-@media screen and (max-width: 1200px) {
-    .new-client, .returning-client {
-       font-size: 20px;
-       width: 400px;
-       height: 300px;
-    }
- }
-
- @media screen and (max-width: 800px) {
-
-    form input {
-        margin: 0px 0px 0px 0px;
-        text-align: center;
-    }
-
-    form button {
-        align-self: center;
-        height: 50px;
-        width: 80px;
-        font-size: 12px
-    }
-
-    .new-client, .returning-client {
-       font-size: 12px;
-       width: 300px;
-       height: 250px;
-    }
- }
