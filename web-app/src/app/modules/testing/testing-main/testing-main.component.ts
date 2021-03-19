@@ -4,10 +4,14 @@ import { TestResults, Test } from 'src/app/shared/models/test-models';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { DataService } from 'src/app/shared/services/data.service';
 import { saveAs } from 'file-saver';
+import { DialogService } from 'primeng/dynamicdialog';
+import { ResultsDialogComponent } from '../results-dialog/results-dialog.component';
+
 @Component({
   selector: 'app-testing-main',
   templateUrl: './testing-main.component.html',
-  styleUrls: ['./testing-main.component.scss']
+  styleUrls: ['./testing-main.component.scss'],
+  providers: [DialogService]
 })
 export class TestingMainComponent implements OnInit {
 
@@ -25,7 +29,7 @@ export class TestingMainComponent implements OnInit {
 
   singleTestResult: TestResults;
 
-  constructor(private _dataService: DataService, private _apiService: ApiService) { }
+  constructor(private _dataService: DataService, private _apiService: ApiService, private dialogService: DialogService) { }
 
   ngOnInit(): void {
     // Get a list of available tests
@@ -43,10 +47,18 @@ export class TestingMainComponent implements OnInit {
         this.testsRun = true;
       }
     }
+    if(this.testResults == null) this.testResults = [];
   }
 
-  showModalDialog() {
+  showModalDialog(desc: string, val: string) {
     this.displayModal = true;
+    this.dialogService.open(ResultsDialogComponent, {
+      data: {
+        description: desc
+      },
+      header: val,
+      width: '50%'
+    });
   }
 
   /** 
@@ -69,7 +81,11 @@ export class TestingMainComponent implements OnInit {
     });
 
     this._apiService.runTests(request).subscribe((response: TestResults[]) => {
-      this.testResults = response;
+      
+      // Append new test results to the testResults variable
+      response.forEach(res => {
+        this.testResults.push(res);
+      });
       this._dataService.setTestResultsList(this.testResults);
       this.testsRun = true;
       this.resultView();
@@ -102,8 +118,9 @@ export class TestingMainComponent implements OnInit {
     t = 'os-name,os-value,ip\n';
     t += '"' + this.os.name + '","' + this.os.value + '",' + this.ip.ip_address + '\n';
     this.testResults.forEach(res => {
+      var desc = res.description.split(',').join('$cm$'); // Avoid comma parsing issues
       t += '\n';
-      t += res.id + ',' + res.test_id + ',' + res.description + ',' + res.date + ',' + res.value;
+      t += res.id + ',' + res.test_id + ',' + desc + ',' + res.date + ',' + res.value;
     });
     return t;
   }
