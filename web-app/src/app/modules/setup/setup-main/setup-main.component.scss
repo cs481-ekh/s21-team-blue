@@ -1,5 +1,5 @@
 :host ::ng-deep .p-button {
-            background-color: #08aaf0;
+            background-color: #0ca4e6;
 }
 
 :host ::ng-deep .p-button:enabled:hover {
@@ -40,7 +40,8 @@
     text-align: center; 
     color: white; 
     border-radius: 10px; 
-    height: 700px; 
+    height: 500px; 
+    font-size: 2rem;
 } 
   
 .card:before {
@@ -128,7 +129,7 @@
 
 button {
     align-self: center;
-    font-size: 24px;
+    font-size: 20px;
     height: 70px;
     width: 150px;
     margin: 50px;

@@ -2,8 +2,8 @@
     <!--OS Selection View-->
     <div *ngIf="osSelection" class="os-selection">
         <div *ngIf="!selectOS">
-            <p style="margin-bottom: 0px;">We detected that your Operating System is <span style="font-weight: bolder; color:#2196F3"> {{selectedOS.name}}</span>. If this is correct, click Continue. Otherwise, click Choose My OS.</p>
-            <button pButton pRipple class="p-button-outlined" label="Choose My OS" (click)="select()"></button>
+            <p style="margin-bottom: 0px;">We detected that your Operating System is <span style="font-weight: bolder; color:#2cc0ff"> {{selectedOS.name}}</span>. If this is correct, click Continue. Otherwise, click Choose My OS.</p>
+            <button pButton pRipple class="p-button-outlined pB" label="Choose My OS" (click)="select()"></button>
         </div>
         <p *ngIf="!foundOS">We were unable to detect your Operating System version. Please choose your Operating System from the dropdown below, then click Continue</p>
         <p *ngIf="selectOS && foundOS && !showText">Select your Operating System</p>
@@ -26,8 +26,8 @@
     <!--IP Address Selection View-->
     <div *ngIf="ipSelection" class="ip-selection">
         <div *ngIf="ipFound">
-            <p style="margin-bottom: 0px;">We detected that your IPv4 address is <span style="font-weight: bolder; color:#2196F3"> {{selectedIP.ip_address}}</span>. If this is correct, click Continue. Otherwise, click Set My IP.</p>
-            <button *ngIf="!selectIP" pButton pRipple class="p-button-outlined" label="Set My IP" (click)="selectIp()"></button>
+            <p style="margin-bottom: 0px;">We detected that your IPv4 address is <span style="font-weight: bolder; color:#2cc0ff"> {{selectedIP.ip_address}}</span>. If this is correct, click Continue. Otherwise, click Set My IP.</p>
+            <button *ngIf="!selectIP" pButton pRipple class="p-button-outlined pB" label="Set My IP" (click)="selectIp()"></button>
         </div>
         <p *ngIf="!ipFound">We were unable to detect your IP address. Please enter your public IPv4 address in the field below, then click Continue</p>
         <div *ngIf="!ipFound || selectIP" class="p-field">
@@ -36,10 +36,10 @@
                 <input pInputText type="text" placeholder="xxx.xxx.xxx.xxx" [formControlName]="'ip'"/>
             </form>
             <div *ngIf="ip_form.controls['ip'].errors?.invalidIp==true" style="margin-top: 10px;">
-                <p-message  severity="info" text="Must enter a public IP address, with each octet separated by a period. Example: 132.178.0.7"></p-message>
+                <p-message  severity="info" text="Must enter a valid IP address, with each octet separated by a period. Example: 132.178.0.7"></p-message>
             </div>
         </div>
         <i class="pi pi-angle-left" (click)="backToOSSelection()"> Back to OS Selection</i>
-        <button pButton pRipple type="button" label="Continue" [disabled]="ip_form.controls['ip'].errors?.invalidIp==true && ip_form.controls['ip'].dirty" (click)="submitIPChoice(selectedIP)"></button>
+        <button pButton pRipple type="button" label="Continue" [disabled]="(ip_form.controls['ip'].errors?.invalidIp==true && ip_form.controls['ip'].dirty) || (selectedIP == null && ip_form.controls['ip'].errors?.invalidIp==true)" (click)="submitIPChoice(selectedIP)"></button>
     </div>
 </div>
