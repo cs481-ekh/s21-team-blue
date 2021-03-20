@@ -13,7 +13,7 @@
         <div class="card">
             <div class="content">
                 <div class="new-client">
-                    <p>If you have NEVER used PiRate on this device...</p>
+                    <p>If you have <em>never</em> used PiRate on this device...</p>
                     <button pButton pRipple type="button" label="Click Here" [routerLink]="['/setup/new-user']"></button>
                 </div>
             </div>
@@ -21,7 +21,7 @@
         <div class="card">
             <div class="content">
                 <div class="returning-client">
-                    <p>If you HAVE used PiRate on this device, upload the save file that PiRate uses.</p>
+                    <p>If you <em>have</em> used PiRate on this device, upload the save file that PiRate uses.</p>
                     <form action="">
                         <p-fileUpload mode="basic" chooseLabel="Browse" name="upload[]" accept=".dat" customUpload="true" maxFileSize="10000000" (uploadHandler)="onUpload($event)" (onUpload)="onUpload($event)" [auto]="true"></p-fileUpload>
                         <div *ngIf="displayError" style="margin-top: 20px;">
