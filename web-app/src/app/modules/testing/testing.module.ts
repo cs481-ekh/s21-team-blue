@@ -4,10 +4,11 @@ import { TestingMainComponent } from './testing-main/testing-main.component';
 import { TestingRoutingModule } from './testing.routing';
 import { SettingsComponent } from './settings/settings.component';
 import { SharedModule } from 'src/app/shared/modules/shared.module';
+import { ResultsDialogComponent } from './results-dialog/results-dialog.component';
 
 
 @NgModule({
-  declarations: [TestingMainComponent, SettingsComponent],
+  declarations: [TestingMainComponent, SettingsComponent, ResultsDialogComponent],
   imports: [
     CommonModule,
     TestingRoutingModule,

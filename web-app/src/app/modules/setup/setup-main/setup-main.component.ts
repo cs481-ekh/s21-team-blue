@@ -73,7 +73,7 @@ export class SetupMainComponent implements OnInit {
             testResults[idx] = {
               id: res_fields[0],
               test_id: res_fields[1],
-              description: res_fields[2],
+              description: res_fields[2].split('$cm$').join(','),
               date: res_fields[3],
               value: res_fields[4]
             };

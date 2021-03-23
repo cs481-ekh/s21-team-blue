@@ -14,6 +14,7 @@ import { TableModule } from 'primeng/table';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ToastModule } from 'primeng/toast';
 import { DialogModule } from 'primeng/dialog';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 
 /**
  * All modules and components shared between all components across the site
@@ -40,7 +41,8 @@ import { DialogModule } from 'primeng/dialog';
     TableModule,
     ProgressSpinnerModule,
     ToastModule, 
-    DialogModule
+    DialogModule,
+    DynamicDialogModule
   ]
 })
 export class SharedModule { }
