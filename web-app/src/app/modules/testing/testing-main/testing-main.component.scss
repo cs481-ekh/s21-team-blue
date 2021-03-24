@@ -1,10 +1,27 @@
 :host ::ng-deep {
+
+    .content {
+        width: 100%;
+        height: 100%;
+        background-color: #032f42;
+    }
+
+    .p-button {
+        background-color: #0ca4e6;
+    }
+
+    .p-button:enabled:hover {
+        background-color: #065374;
+    }
+
     .wrapper {
         display: flex;
         width: 100%;
         height: 100vh;
         justify-content: center;
         align-items: center;
+        overflow-x: auto;
+        overflow-y: auto;
     }
 
     .wrapper .settings-icon {
@@ -19,9 +36,13 @@
     }
 
     .test-area {
-        margin-top: 300px;
         width: 700px;
-        height: 100%;
+        height: 70%;
+    }
+
+    .test-results {
+        width: 700px;
+        height: 20%;
     }
 
     .td-clickable:hover {
@@ -31,15 +52,6 @@
     .p-paginator {
         .p-paginator-current {
             margin-left: auto;
-        }
-    }
-
-    .p-progressbar {
-        height: .5rem;
-        background-color: #D8DADC;
-
-        .p-progressbar-value {
-            background-color: #607D8B;
         }
     }
 

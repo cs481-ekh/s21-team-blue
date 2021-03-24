@@ -16,7 +16,8 @@ import sys
 import json
 
 # import every '.py' in the 'scans' directory and record its name in 'tests' as a string
-tests = [x[:-3] for x in os.listdir("tests") if x.endswith(".py")]
+dir = os.path.dirname(__file__) # Get the current directory of this file
+tests = [x[:-3] for x in os.listdir(os.path.join(dir,"tests")) if x.endswith(".py")]
 tests.remove("__init__") # __init__ is not a scan!
 for test in tests: exec("from tests." + test + " import " + test)
 
@@ -25,6 +26,9 @@ name = ""
 desc = ""
 oses = ""
 
+test_val = ""
+test_desc = ""
+ip = ""
 
 def main():
     """
@@ -40,11 +44,15 @@ def main():
         print("    --list: Print out a list of runnable tests")
         print("    --ip ip_addr test_id0 test_id1 ...: Scan the host at ip_addr with tests id0, id1, ... and print the results")
     elif args[0] == "--list":
-        print(tests)
-        [print(json.dumps(test)) for test in test_list()]
+        list = '[' # Brackets required for proper JSON object formatting
+        for test in test_list():
+            list += json.dumps(test) + ','        
+        list = list[:-1] # Remove the last comma
+        list += ']'
+        print(list)
     elif args[0] == "--ip":
         ip = args[1]
-        test_ids = args[2:]
+        test_ids = args[2].split(',')
         results = execute_tests(ip, test_ids) # Execute the tests and store the results
         print(json.dumps(results))
 
@@ -83,13 +91,11 @@ def execute_tests(ip, test_ids):
 
     results = []
     for result_id, test_id in enumerate(test_ids):
-        test_name = tests[test_id]
-        test_val = ""
-        test_desc = ""
-        exec("test_val = " + test_name + ".scan(ip)")
-        exec("test_desc = " + test_name + ".desc")
+        test_name = tests[int(test_id)]
+        exec("test_val = " + test_name + ".scan('" + ip + "')", globals())
+        exec("test_desc = " + test_name + ".desc", globals())
         test_result = {
-            "id": str(result_id),
+            "id": str(result_id+1),
             "test_id": str(test_id),
             "value": test_val,
             "description": test_desc,
