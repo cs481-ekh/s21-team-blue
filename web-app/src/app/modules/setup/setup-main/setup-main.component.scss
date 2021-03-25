@@ -87,7 +87,7 @@
   
 .card:before { 
     background-image: linear-gradient( 
-        to bottom right, #00608a, #00608a);  
+        to bottom right, #0579aa, #0779aa);  
 } 
   
 
@@ -145,4 +145,10 @@ form {
 form input {
     margin: 30px 30px 0px 30px;
     text-align: center;
+}
+
+@media screen and (min-width: 2000px) {
+    .card {
+        height: 700px; 
+    }
 }

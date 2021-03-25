@@ -16,7 +16,7 @@ class basic_port_scan:
     desc = "Scan TCP ports 21-443 and interrogate those open ports for the services running on them."
     oses = "Any"
 
-    def scan(self, host_ip):
+    def scan(host_ip):
         """
         Scan common TCP ports (21-443) and determine if they are open.
         If they are open, they are interrogated for the services running on those ports.

@@ -32,7 +32,7 @@ app.get('/api/get-client-ip', (req, res) => {
 
 app.get('/api/get-test-list', (req, res) => {
   var spawn = require('child_process').spawn;
-  proc = spawn('python3', ['../controller/basic_scans.py', 'get-test-list'])
+  proc = spawn('python3', ['../controller/main.py', '--list'])
   proc.stdout.on('data', function(data) {
     res.send(JSON.parse(data));
   })
@@ -50,7 +50,7 @@ app.post('/api/run-tests', (req, res) => {
   
   results = "";
   var spawn = require('child_process').spawn;
-  proc = spawn('python3', ['../controller/basic_scans.py', ip_address, request]);
+  proc = spawn('python3', ['../controller/main.py', '--ip', ip_address, request]);
   proc.stdout.on('data', function(data) {
     res.send(JSON.parse(data));
   });

@@ -26,10 +26,25 @@ export class TestingMainComponent implements OnInit {
   ip: IpAddress;
   displayModal: boolean = false;
   displayTestArea: boolean = false;
+  testCols: { header: string; width: string; }[];
+  resCols: { header: string; width: string; }[];
 
   singleTestResult: TestResults;
 
-  constructor(private _dataService: DataService, private _apiService: ApiService, private dialogService: DialogService) { }
+  constructor(private _dataService: DataService, private _apiService: ApiService, private dialogService: DialogService) { 
+    this.testCols = [
+      { header: ' ', width: '5%' },
+      { header: 'Name', width: '30%' },
+      { header: 'Description', width: '35%' },
+      { header: 'Operating Systems', width: '30%' }
+    ];
+
+    this.resCols = [
+      { header: 'Name', width: '35%' },
+      { header: 'Date Executed', width: '35%' },
+      { header: 'Result', width: '30%' },
+    ];
+  }
 
   ngOnInit(): void {
     // Get a list of available tests

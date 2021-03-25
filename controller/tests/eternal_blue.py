@@ -16,7 +16,7 @@ class eternal_blue:
     desc = "Scans for the eternal blue vulnerability"
     oses = "Windows"
 
-    def scan (self, host_ip):
+    def scan (host_ip):
         """
         Scan for the Eternal Blue vulnerability according to the Pirate Scan API.
 

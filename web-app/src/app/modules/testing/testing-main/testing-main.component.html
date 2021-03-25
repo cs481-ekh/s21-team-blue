@@ -1,76 +1,89 @@
-<div class="wrapper">
-    <i class="pi pi-cog settings-icon" title="Settings" [routerLink]="['/main/settings']" style="font-size: 3rem;"></i>
-    <div *ngIf="displayTestArea" class="test-area">
-         <!-- Main test list -->
-        <div class="test-list" *ngIf="testsView">
-            <p-table [value]="tests"
-            [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [paginator]="true"
-            [(selection)]="selectedTests" dataKey="test_id" styleClass="p-datatable-tests"
-            [filterDelay]="0" [rows]="10" [rowHover]="true">
-                <ng-template pTemplate="caption">
-                    <div class="table-header">
-                        Available Tests
-                    </div>
-                </ng-template>
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th style="width: 3rem">
-                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                        </th>
-                        <th pSortableColumn="test_name">Name <p-sortIcon field="test_name"></p-sortIcon></th>
-                        <th>Description</th>
-                        <th pSortableColumn="operating_systems">Operating Systems <p-sortIcon field="operating_systems"></p-sortIcon></th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-test>
-                    <tr>
-                        <td>
-                            <p-tableCheckbox [value]="test"></p-tableCheckbox>
-                        </td>
-                        <td>{{test.test_name}}</td>
-                        <td>{{test.test_description}}</td>
-                        <td>{{test.operating_systems}}</td>
-                    </tr>
-                </ng-template>
-            </p-table>
-            <button *ngIf="testsRun" style="margin-top: 5px;" pButton pRipple type="button" label="View Previous Test Results" (click)="resultView()"></button>
-            <button style="float: right; margin-top: 5px;" pButton pRipple type="button" [disabled]="selectedTests == null || selectedTests[0] == undefined" label="Run Selected Tests" (click)="runTests()"></button>
-        </div>
+<div class="content">
+    <div class="wrapper">
+        <i class="pi pi-cog settings-icon" title="Settings" [routerLink]="['/main/settings']" style="font-size: 3rem;"></i>
+        <div *ngIf="displayTestArea" class="test-area">
+            <!-- Main test list -->
+            <div class="test-list" *ngIf="testsView">
+                <p-table [value]="tests" [columns]="testCols"
+                [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true"
+                [(selection)]="selectedTests" dataKey="test_id" styleClass="p-datatable-tests"
+                [filterDelay]="0" [rows]="5" [rowHover]="true" 
+                [scrollable]="true" scrollHeight="500px">
+                    <ng-template pTemplate="caption">
+                        <div class="table-header">
+                            Available Tests
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="colgroup" let-columns>
+                        <colgroup>
+                            <col *ngFor="let col of columns" [style.width]="col.width">
+                        </colgroup>
+                    </ng-template>
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th> 
+                                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                            </th>
+                            <th pSortableColumn="test_name">Name <p-sortIcon field="test_name"></p-sortIcon></th>
+                            <th>Description </th>
+                            <th pSortableColumn="operating_systems">Operating Systems <p-sortIcon field="operating_systems"></p-sortIcon></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-test>
+                        <tr>
+                            <td class="ui-resizable-column">
+                                <p-tableCheckbox [value]="test"></p-tableCheckbox>
+                            </td>
+                            <td class="ui-resizable-column">{{test.test_name}}</td>
+                            <td class="ui-resizable-column">{{test.test_description}}</td>
+                            <td class="ui-resizable-column">{{test.operating_systems}}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+                <button *ngIf="testsRun" style="margin-top: 5px; margin-bottom: 50px" pButton pRipple type="button" label="View Previous Test Results" (click)="resultView()"></button>
+                <button style="float: right; margin-top: 5px; margin-bottom: 50px" pButton pRipple type="button" [disabled]="selectedTests == null || selectedTests[0] == undefined" label="Run Selected Tests" (click)="runTests()"></button>
+            </div>
 
-        <!-- Loading screen while tests are running -->
-        <div class="loading-screen" *ngIf="loadingView">
-            <h2>Running Tests...</h2>
-            <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner" strokeWidth="5" animationDuration=".9s"></p-progressSpinner>
-        </div>
+            <!-- Loading screen while tests are running -->
+            <div class="loading-screen" *ngIf="loadingView">
+                <h2>Running Tests...</h2>
+                <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner" strokeWidth="5" animationDuration=".9s"></p-progressSpinner>
+            </div>
 
-        <!-- Test results displayed after tests are run -->
-        <div class="test-results" *ngIf="resultsView">
-            <p-table [value]="testResults"
-            [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [paginator]="true"
-            dataKey="test_id" styleClass="p-datatable-tests"
-            [filterDelay]="0" [rows]="10" [rowHover]="true">
-                <ng-template pTemplate="caption">
-                    <div class="table-header">
-                        Test Results
-                    </div>
-                </ng-template>
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th pSortableColumn="test_name">Name <p-sortIcon field="test_name"></p-sortIcon></th>
-                        <th pSortableColumn="date">Date Executed <p-sortIcon field="date"></p-sortIcon></th>
-                        <th pSortableColumn="value">Status <p-sortIcon field="value"></p-sortIcon></th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-result>
-                    <tr>
-                        <td class="td-clickable" (click)="showModalDialog(result.description, result.value)">{{tests[result.test_id-1].test_name}}</td>
-                        <td class="td-clickable" (click)="showModalDialog(result.description, result.value)">{{result.date}}</td>
-                        <td class="td-clickable" (click)="showModalDialog(result.description, result.value)">{{result.value}}</td>
-                    </tr>
-                </ng-template>
-            </p-table>
-            <button *ngIf="testsRun" style="margin-top: 5px;" pButton pRipple type="button" label="Return to Test Selection" (click)="testView()"></button>
-            <button *ngIf="testsRun" style="float: right; margin-top: 5px;" pButton pRipple type="button" label="Save Results to File" (click)="saveFile()"></button>
+            <!-- Test results displayed after tests are run -->
+            <div class="test-results" *ngIf="resultsView">
+                <p-table [value]="testResults" [columns]="resCols"
+                [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true"
+                dataKey="test_id" styleClass="p-datatable-tests"
+                [filterDelay]="0" [rows]="5" [rowHover]="true" [scrollable]="true" scrollHeight="500px">
+                    <ng-template pTemplate="caption">
+                        <div class="table-header">
+                            Test Results
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="colgroup" let-columns>
+                        <colgroup>
+                            <col *ngFor="let col of columns" [style.width]="col.width">
+                        </colgroup>
+                    </ng-template>
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th pSortableColumn="test_name">Name <p-sortIcon field="test_name"></p-sortIcon></th>
+                            <th pSortableColumn="date">Date Executed <p-sortIcon field="date"></p-sortIcon></th>
+                            <th pSortableColumn="value">Result <p-sortIcon field="value"></p-sortIcon></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-result>
+                        <tr>
+                            <td class="td-clickable" (click)="showModalDialog(result.description, result.value)">{{tests[result.test_id].test_name}}</td>
+                            <td class="td-clickable" (click)="showModalDialog(result.description, result.value)">{{result.date}}</td>
+                            <td class="td-clickable" (click)="showModalDialog(result.description, result.value)">{{result.value}}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+                <button *ngIf="testsRun" style="margin-top: 5px; margin-bottom: 50px" pButton pRipple type="button" label="Return to Test Selection" (click)="testView()"></button>
+                <button *ngIf="testsRun" style="float: right; margin-top: 5px; margin-bottom: 50px" pButton pRipple type="button" label="Save Results to File" (click)="saveFile()"></button>
+            </div>
         </div>
     </div>
 </div>
