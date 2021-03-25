@@ -91,10 +91,8 @@ def execute_tests(ip, test_ids):
 
     results = []
     for result_id, test_id in enumerate(test_ids):
-        test_name = tests[test_id]
-        test_val = ""
-        test_desc = ""
-        exec("test_val, test_desc = " + test_name + ".scan(ip)")
+        test_name = tests[int(test_id)]
+        exec("test_val, test_desc = " + test_name + ".scan('" + ip + "')", globals())
         test_result = {
             "id": str(result_id+1),
             "test_id": str(test_id),
