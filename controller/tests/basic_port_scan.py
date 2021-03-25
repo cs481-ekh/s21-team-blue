@@ -28,11 +28,11 @@ class basic_port_scan:
         scanner.scan(host_ip, "21-443")
 
         if not scanner.all_hosts():
-            return "Failure. Host cannot be found."
+            return ("Failure", "Host cannot be found.")
 
         host = scanner.all_hosts()[0]
         if "tcp" not in scanner[host].all_protocols():
-            return "Success. No open TCP ports found on host."
+            return ("Success", "No open TCP ports found on host.")
 
         open_ports = {}
         scanned_ports = scanner[host]["tcp"].keys()
@@ -41,5 +41,5 @@ class basic_port_scan:
             port_prod = scanner[host]["tcp"][port]["product"]
             open_ports[port] = port_name + ", " + port_prod
 
-        return "Success. Open TCP ports: " + str(open_ports)
+        return ("Success", "Open TCP ports: " + str(open_ports))
 

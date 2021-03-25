@@ -27,11 +27,11 @@ class eternal_blue:
         scanner.scan(hosts=host_ip, ports="445", arguments="--script smb-vuln-ms17-010")
 
         if not scanner.all_hosts():
-            return "Failure. No hosts detected."
+            return ("Failure", "No hosts detected.")
 
         host = scanner.all_hosts()[0]
         if "hostscript" not in scanner[host].keys():
-            return "Success. Host is not vulnerable to Eternal Blue (CVE MS17-010)."
+            return ("Success", "Host is not vulnerable to Eternal Blue (CVE MS17-010).")
         else:
             nmap_output = scanner[host]["hostscript"][0]["output"]
-            return "Failure. Host is vulnerable to Eternal Blue (CVE MS17-010).\n" + nmap_output
+            return ("Failure", "Host is vulnerable to Eternal Blue (CVE MS17-010).\n" + nmap_output)

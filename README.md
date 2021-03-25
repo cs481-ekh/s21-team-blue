@@ -72,7 +72,7 @@ where `test-name` is the name of your plugin e.g. 'Eternal Blue'. In this python
   2. A field called `desc` which is a short description of the test.
   3. A field called `oses` which is a list of Operating Systems the test supports.
   4. A method called `scan()` which accepts a single argument, the host_ip to scan in the form of a string, and returns
-     a string containing the result of the scan.
+     a two-tuple containing the status of the result (success or failure) and a longform description of the result.
 
 After you've created this python file, place it in the `controller/tests` directory of the Pirate installation. The 
 controller will automatically detect it and you'll be able to select and run it through the web API.
