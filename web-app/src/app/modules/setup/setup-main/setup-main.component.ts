@@ -1,9 +1,11 @@
 import { ParseSourceFile, ReadVarExpr } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { IpAddress, OperatingSystem } from 'src/app/shared/models/system-info-models';
 import { TestResults } from 'src/app/shared/models/test-models';
 import { DataService } from 'src/app/shared/services/data.service';
+import { Message } from 'primeng/api';
 
 @Component({
   selector: 'app-setup-main',
@@ -20,6 +22,7 @@ export class SetupMainComponent implements OnInit {
   uploadSuccess: boolean = false;
   displayError: boolean = false;
   displayDialog: boolean = false;
+  msg: Message[] = [];
 
   ngOnInit(): void {
     if(this._dataService.getFileError() !== null) {
@@ -90,6 +93,7 @@ export class SetupMainComponent implements OnInit {
           this.displayDialog = false;
           this.displayError = false;
           this.uploadSuccess = true;
+          this.msg = [{severity:'success', summary:'Upload Successful!', detail:'Your settings and test history have been uploaded. Click "Go" to continue to the test page'}];
         }
       } else {
         this.fileFormatError();

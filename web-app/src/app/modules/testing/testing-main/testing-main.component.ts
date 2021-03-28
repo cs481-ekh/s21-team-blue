@@ -6,18 +6,21 @@ import { DataService } from 'src/app/shared/services/data.service';
 import { saveAs } from 'file-saver';
 import { DialogService } from 'primeng/dynamicdialog';
 import { ResultsDialogComponent } from '../results-dialog/results-dialog.component';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { Message } from 'primeng/api';
 
 @Component({
   selector: 'app-testing-main',
   templateUrl: './testing-main.component.html',
   styleUrls: ['./testing-main.component.scss'],
-  providers: [DialogService]
+  providers: [DialogService, ConfirmationService,MessageService]
 })
 export class TestingMainComponent implements OnInit {
 
   tests: Test[];
   selectedTests: Test[];
   testResults: TestResults[];
+  deleteResults: TestResults[];
   testsView: boolean = true;
   resultsView: boolean = false;
   testsRun: boolean = false;
@@ -28,10 +31,13 @@ export class TestingMainComponent implements OnInit {
   displayTestArea: boolean = false;
   testCols: { header: string; width: string; }[];
   resCols: { header: string; width: string; }[];
+  currId: number = 0;
+  msg: Message[] = [];
 
   singleTestResult: TestResults;
 
-  constructor(private _dataService: DataService, private _apiService: ApiService, private dialogService: DialogService) { 
+  constructor(private _dataService: DataService, private _apiService: ApiService, private dialogService: DialogService, 
+    private confirmationService: ConfirmationService) { 
     this.testCols = [
       { header: ' ', width: '5%' },
       { header: 'Name', width: '30%' },
@@ -40,6 +46,7 @@ export class TestingMainComponent implements OnInit {
     ];
 
     this.resCols = [
+      { header: ' ', width: '5%' },
       { header: 'Name', width: '35%' },
       { header: 'Date Executed', width: '35%' },
       { header: 'Result', width: '30%' },
@@ -59,6 +66,8 @@ export class TestingMainComponent implements OnInit {
       var tr = this._dataService.getTestResultsList();
       if(tr !== null) {
         this.testResults = tr;
+        if(tr.length > 0)
+          this.currId = Number(tr[tr.length-1].id) + 1;
         this.testsRun = true;
       }
     }
@@ -76,11 +85,23 @@ export class TestingMainComponent implements OnInit {
     });
   }
 
+  confirmDeletion() {
+    this.confirmationService.confirm({
+        message: 'Are you sure that you want to delete this test/set of tests? Deleted tests cannot be restored.',
+        header: 'Delete Confirmation',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          this.deleteTestResults();
+          this.msg = [{severity:'info', summary:'Confirmed', detail:'Selected tests have been deleted'}];
+        }
+    });
+  }
+
   /** 
    * Execute the selected tests
    */
   runTests(): void {    
-    // Flip the screen to show results
+    // Flip the screen to show loading screen
     this.testsView = false;
     this.loadingView = true;
 
@@ -99,6 +120,8 @@ export class TestingMainComponent implements OnInit {
       
       // Append new test results to the testResults variable
       response.forEach(res => {
+        res.id = String(this.currId);
+        this.currId++;
         this.testResults.push(res);
       });
       this._dataService.setTestResultsList(this.testResults);
@@ -153,6 +176,26 @@ export class TestingMainComponent implements OnInit {
    * @param res - the result to display
    */
   resultPopup(res: TestResults) {
+  }
+
+  deleteTestResults(): void {
+    var newResultsList: TestResults[] = [];
+    this.testResults.forEach(t => {
+      if(!this.deleteResults.includes(t)) {
+        newResultsList.push(t);
+      } else {
+      }
+    });
+    this._dataService.setTestResultsList(newResultsList);
+    if(this._dataService.getTestResultsList() !== null) {
+      var tr = this._dataService.getTestResultsList();
+      if(tr !== null) {
+        this.testResults = tr;
+      }
+    } else {
+      this.testResults = [];
+    }
+    this.deleteResults = [];
   }
 
   /**
