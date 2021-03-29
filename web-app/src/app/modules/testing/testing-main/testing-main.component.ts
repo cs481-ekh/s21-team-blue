@@ -35,6 +35,7 @@ export class TestingMainComponent implements OnInit {
   msg: Message[] = [];
 
   singleTestResult: TestResults;
+  displayDialog: boolean = false;
 
   constructor(private _dataService: DataService, private _apiService: ApiService, private dialogService: DialogService, 
     private confirmationService: ConfirmationService) { 
@@ -67,7 +68,7 @@ export class TestingMainComponent implements OnInit {
       if(tr !== null) {
         this.testResults = tr;
         if(tr.length > 0)
-          this.currId = Number(tr[tr.length-1].id) + 1;
+          this.currId = tr.length;
         this.testsRun = true;
       }
     }
@@ -101,6 +102,11 @@ export class TestingMainComponent implements OnInit {
    * Execute the selected tests
    */
   runTests(): void {    
+    if(this.selectedTests.length + this.currId > 500) {
+      this.displayDialog = true;
+      return;
+    }
+
     // Flip the screen to show loading screen
     this.testsView = false;
     this.loadingView = true;
@@ -138,6 +144,7 @@ export class TestingMainComponent implements OnInit {
   testView(): void {
     this.resultsView = false;
     this.testsView = true;
+    this.msg = [];
   }
 
   /**
@@ -149,6 +156,7 @@ export class TestingMainComponent implements OnInit {
     this.testsView = false;
     this.loadingView = false;
     this.resultsView = true;
+    this.msg = [];
   }
 
   generateFileText(): string {
@@ -191,9 +199,11 @@ export class TestingMainComponent implements OnInit {
       var tr = this._dataService.getTestResultsList();
       if(tr !== null) {
         this.testResults = tr;
+        this.currId = this.testResults.length;
       }
     } else {
       this.testResults = [];
+      this.currId = 0;
     }
     this.deleteResults = [];
   }

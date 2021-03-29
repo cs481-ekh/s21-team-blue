@@ -1,3 +1,10 @@
+<p-dialog header="Too Many Results" [(visible)]="displayDialog" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="1000"
+    [draggable]="false" [resizable]="false">
+    <p class="p-m-0">Error: Maximum of 500 Test Results allowed. Please delete some before running more tests.</p>
+        <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="displayDialog=false" label="Ok"></p-button>
+        </ng-template>
+</p-dialog>
 <div class="content">
     <div class="wrapper">
         <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"></p-confirmDialog>
