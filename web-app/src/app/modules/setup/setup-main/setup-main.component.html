@@ -24,7 +24,7 @@
                 <div class="returning-client">
                     <p>If you <em>have</em> used PiRate on this device, upload the save file that PiRate uses.</p>
                     <form action="">
-                        <p-fileUpload mode="basic" chooseLabel="Browse" name="upload[]" accept=".dat" customUpload="true" maxFileSize="10000000" (uploadHandler)="onUpload($event)" (onUpload)="onUpload($event)" [auto]="true"></p-fileUpload>
+                        <p-fileUpload mode="basic" chooseLabel="Browse" name="upload[]" accept=".dat" customUpload="true" maxFileSize="1000000" (uploadHandler)="onUpload($event)" (onUpload)="onUpload($event)" [auto]="true"></p-fileUpload>
                         <div *ngIf="displayError" style="margin-top: 20px;">
                             <p-message severity="error" text="File format error. Please try again with a different/modified file."></p-message>
                         </div>

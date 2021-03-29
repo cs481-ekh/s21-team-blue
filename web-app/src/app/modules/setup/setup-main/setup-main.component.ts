@@ -66,7 +66,7 @@ export class SetupMainComponent implements OnInit {
         ip_address: ip_field
       };
 
-      if (file.length > 3) { // If there are any TestResults, save them in LocalStorage
+      if (file.length > 3 && file.length < 504) { // If there are any TestResults, save them in LocalStorage
         var testResults: TestResults[] = [];
         for(var i: number = 3; i < file.length; i++) {
           var currLine: string = file[i];
