@@ -1,4 +1,11 @@
 #!/bin/bash
+sudo apt-get update -y
+sudo apt-get upgrade -y
+sudo apt-get install python3.6 -y
+
+wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.36.0/install.sh | bash
+nvm install 15.10.0
+
 cd /home/pi/s21-team-blue/web-app
 sudo npm ci
 sudo npm run pro-build
