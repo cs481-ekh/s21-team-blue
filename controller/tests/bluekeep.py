@@ -27,8 +27,8 @@ class bluekeep:
         scriptpath = os.path.dirname(os.path.realpath(__file__))
         rdpscan_cmd = scriptpath + "/rdpscan"
         output = subprocess.run([rdpscan_cmd, "-v", host_ip], stdout=subprocess.PIPE)
-        output = output.stdout
+        output = output.stdout.decode("UTF-8")
         if "VULNERABLE" in output:
-            return ("Failure.", output)
+            return ("Failure.", "Host is vulnerable, rdpscan output: " + output)
         else:
-            return ("Success.", output)
+            return ("Success.", "Host is not vulnerable, rdpscan output: " + output)
