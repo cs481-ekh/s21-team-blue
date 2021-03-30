@@ -57,3 +57,11 @@ Check that DNSutils is working by running:
   
 You should get another large printout of information with the response time being around 50-100ms if you pinged google.com
 Running the command again you should see that the response time is now at just about 0ms.
+
+### Using auto-start script for program
+
+First: Move the `dhcpcd.conf` file into the /etc/ folder on the Pi, overwrite the old one in the folder
+Second: Move the `.bashrc` file into the /home/pi/ folder on the Pi, overwrite the old one in the folder
+Third: Move the `serverscript.sh` file into /home/pi/s21-team-blue/backend folder on the Pi, this needs to be the path for the script/project otherwise things break
+Fourth: That's it, now whenever you login, boot up the terminal, or ssh into the Pi it should automatically run the script and make sure everything is compiled for the program
+(Still working on checks to see if all it needs to do is run and not compile and build everything)
