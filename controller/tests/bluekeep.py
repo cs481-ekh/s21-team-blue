@@ -5,6 +5,7 @@ Written by Max Hanson, Spring 2021 for my BSU Senior Project.
 """
 
 import subprocess
+import os
 
 
 class bluekeep:
@@ -16,14 +17,16 @@ class bluekeep:
     desc = "Scans for the bluekeep vulnerability"
     oses = "Windows"
 
-    def scan (self, host_ip):
+    def scan (host_ip):
         """
         Scan for the Bluekeep vulnerability according to the Pirate Scan API.
 
         @param host_ip The ip address of the host to scan for the vulnerability
         """
 
-        output = subprocess.run(["./rdpscan", "-v", host_ip], stdout=subprocess.PIPE)
+        scriptpath = os.path.dirname(os.path.realpath(__file__))
+        rdpscan_cmd = scriptpath + "/rdpscan"
+        output = subprocess.run([rdpscan_cmd, "-v", host_ip], stdout=subprocess.PIPE)
         output = output.stdout
         if "VULNERABLE" in output:
             return ("Failure.", output)
