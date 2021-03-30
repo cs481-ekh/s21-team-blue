@@ -9,6 +9,7 @@
     <div class="wrapper">
         <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"></p-confirmDialog>
         <i class="pi pi-cog settings-icon" title="Settings" [routerLink]="['/main/settings']" style="font-size: 3rem;"></i>
+        <button style="margin-top: 5px; margin-bottom: 50px;" pButton pRipple type="button" label="Add My Own Tests" [routerLink]="['/main/add-test']"></button>
         <div *ngIf="displayTestArea" class="test-area">
             <!-- Main test list -->
             <div class="test-list" *ngIf="testsView">
@@ -49,7 +50,10 @@
                     </ng-template>
                 </p-table>
                 <button *ngIf="testsRun && testResults != null && testResults[0] != undefined" style="margin-top: 5px; margin-bottom: 50px" pButton pRipple type="button" label="View Previous Test Results" (click)="resultView()"></button>
-                <button style="float: right; margin-top: 5px; margin-bottom: 50px" pButton pRipple type="button" [disabled]="selectedTests == null || selectedTests[0] == undefined" label="Run Selected Tests" (click)="runTests()"></button>
+                <div class="result-options" style="float: right;">
+                    <button style="float: right; margin-top: 5px;" pButton pRipple type="button" [disabled]="selectedTests == null || selectedTests[0] == undefined" label="Run Selected Tests" (click)="runTests()"></button>
+                    <button style="margin-top: 5px; margin-bottom: 50px;" pButton pRipple type="button" label="Add My Own Test(s)" [routerLink]="['/main/add-test']"></button>
+                </div>
             </div>
 
             <!-- Loading screen while tests are running -->
@@ -63,7 +67,7 @@
                 <p-messages [value]="msg"></p-messages>
                 <p-table [value]="testResults" [columns]="resCols"
                 [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true"
-                [(selection)]="deleteResults" dataKey="id" styleClass="p-datatable-tests" 
+                [(selection)]="deleteResults" dataKey="date" styleClass="p-datatable-tests" 
                 [filterDelay]="0" [rows]="5" [rowHover]="true" [scrollable]="true" scrollHeight="500px">
                     <ng-template pTemplate="caption">
                         <div class="table-header">

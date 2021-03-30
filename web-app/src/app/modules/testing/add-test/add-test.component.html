@@ -1,0 +1,36 @@
+<div class="content">
+    <h1>Adding your own tests to PiRate</h1>
+    <p>The Raspberry Pi contains a suite of tests in the form of executable Python files, where each .py file contains a single test.</p>
+    <p>To add your own test, follow the steps below:</p>
+    <ul>
+        <li>
+            Create a python file (ending in .py) called <i>test_name.py</i>, where <i>test_name</i> is the name of your test (i.e., "Eternal Blue").
+        </li>
+        <li>
+            In this file, create a class that exactly matches the name of your file (without the .py ending). This class must contain the following:
+            <ol>
+                <li>A field called <em>name</em>, which is the name of the test.</li>
+                <li>A field called <em>desc</em>, which is a short description of the test.</li>
+                <li>A field called <em>oses</em>, which is a list of Operating Systems the test supports.</li>
+                <li>
+                    A method called <em>scan(ip)</em>, which is where the test logic will be contained. This method
+
+                    <ul>
+                        <li>Accepts a single argument, <em>ip</em> - the IP address to run the test on.</li>
+                        <li>Returns a two-tuple containing the following:
+                            <ol>
+                                <li>the status of the result (i.e., "Success", "Failure", "Info", etc.)</li>
+                                <li>A longform description of the result (i.e., command line output, helpful error messages, etc.).</li>
+                            </ol>
+                        </li>
+                    </ul>
+                </li>
+            </ol>
+        </li>
+        <li>
+            <em>NOTE:</em> All fields, along with the method argument and return values, must be of type <i>string</i>.
+        </li>
+    </ul>
+    <p>Once you have the test in a Python file that matches the acceptable format, you can upload the file by clicking the "Upload" button below.</p>
+    <p-fileUpload mode="basic" chooseLabel="Upload" name="upload[]" accept=".py" customUpload="true" maxFileSize="1000000" (uploadHandler)="onUpload($event)" (onUpload)="onUpload($event)" [auto]="true"></p-fileUpload>
+</div>
