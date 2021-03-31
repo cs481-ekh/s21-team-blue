@@ -5,11 +5,36 @@
         <p-button icon="pi pi-check" (click)="displayDialog=false" label="Ok"></p-button>
         </ng-template>
 </p-dialog>
+<p-dialog header="HTTP Error" [(visible)]="testListError" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="1000"
+    [draggable]="false" [resizable]="false">
+    <p class="p-m-0">Error: There was an error getting the test list from the Pi. Please review the error message below for more information.</p>
+    <p-accordion>
+        <p-accordionTab header="View Error">
+            <code *ngIf="errorMessage != ''">{{errorMessage}}</code>
+            <p>{{errorLong}}</p>
+        </p-accordionTab>
+    </p-accordion>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="testListError=false" label="Ok"></p-button>
+    </ng-template>
+</p-dialog>
+<p-dialog header="HTTP Error" [(visible)]="testExecutionError" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="1000"
+    [draggable]="false" [resizable]="false">
+    <p class="p-m-0">Error: There was an error running the selected test(s) on the Pi. Please review the error message below for more information.</p>
+    <p-accordion>
+        <p-accordionTab header="View Error">
+            <code *ngIf="errorMessage != ''">{{errorMessage}}</code>
+            <p>{{errorLong}}</p>
+        </p-accordionTab>
+    </p-accordion>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="testView()" label="Ok"></p-button>
+    </ng-template>
+</p-dialog>
 <div class="content">
     <div class="wrapper">
         <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"></p-confirmDialog>
         <i class="pi pi-cog settings-icon" title="Settings" [routerLink]="['/main/settings']" style="font-size: 3rem;"></i>
-        <button style="margin-top: 5px; margin-bottom: 50px;" pButton pRipple type="button" label="Add My Own Tests" [routerLink]="['/main/add-test']"></button>
         <div *ngIf="displayTestArea" class="test-area">
             <!-- Main test list -->
             <div class="test-list" *ngIf="testsView">
@@ -106,6 +131,11 @@
                     <button *ngIf="testsRun" style="margin-top: 5px; margin-bottom: 50px;" pButton pRipple type="button" styleClass="delete-button" class="p-button-danger" label="Delete Selected Tests" [disabled]="deleteResults == null || deleteResults[0] == undefined" (click)="confirmDeletion()"></button>
                 </div>
             </div>
+        </div>
+        <div *ngIf="noTests" style="margin-bottom: 100px;" class="no-tests-found-view">
+            <h2>No Tests Found</h2>
+            <p>An error occurred while retrieving the tests, or no tests were found on the Pi.</p>
+            <button *ngIf="testsRun && testResults != null && testResults[0] != undefined" style="float:left; margin-top: 5px; margin-bottom: 50px" pButton pRipple type="button" label="View Previous Test Results" (click)="resultView()"></button>
         </div>
     </div>
 </div>

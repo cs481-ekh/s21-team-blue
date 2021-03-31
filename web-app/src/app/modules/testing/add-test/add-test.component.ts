@@ -20,6 +20,7 @@ export class AddTestComponent implements OnInit {
     if(this.file) {
       // TODO: Test if the file will return correctly after uploading and calling --list. 
       // If it doesn't, delete it and return an error. 
+      
     }
   }
 

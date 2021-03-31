@@ -4,8 +4,6 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const RequestIp = require('@supercharge/request-ip');
-const { networkInterfaces } = require('os');
-var sys = require('util')
 
 var app = express();
 var ip;
@@ -22,21 +20,34 @@ app.get('/api/get-client-ip', (req, res) => {
   if(ip) {
     res.json({
       "ip_address" : ip
-    })
+    });
   } else {
     res.json({
       "ip_address" : "Error: Unable to identify client IP Address"
-    })
+    });
   }
 });
 
 app.get('/api/get-test-list', (req, res) => {
+  list = "";
+  error = "";
   var spawn = require('child_process').spawn;
   proc = spawn('python3', ['../controller/main.py', '--list'])
   proc.stdout.on('data', function(data) {
-    res.send(JSON.parse(data));
-  })
-})
+    list = JSON.parse(data);
+  });
+  proc.stderr.on('data', function(data) {
+    error += data.toString();
+  });
+  proc.on('close', function(exitCode) {
+    if(error != "") {
+      res.statusCode = 500;
+      res.send(error);
+    } else {
+      res.send(list);
+    }
+  });
+});
 
 // Run one or more tests and return the TestResults
 app.post('/api/run-tests', (req, res) => {
@@ -49,10 +60,22 @@ app.post('/api/run-tests', (req, res) => {
   ip_address = request.shift(); 
   
   results = "";
+  error = "";
   var spawn = require('child_process').spawn;
   proc = spawn('python3', ['../controller/main.py', '--ip', ip_address, request]);
   proc.stdout.on('data', function(data) {
-    res.send(JSON.parse(data));
+    results = JSON.parse(data);
+  });
+  proc.stderr.on('data', function(data) {
+    error += data.toString();
+  });
+  proc.on('close', function(exitCode) {
+    if(error != "") {
+      res.statusCode = 500;
+      res.send(error);
+    } else {
+      res.send(results);
+    }
   });
 });
 
