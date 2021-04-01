@@ -1,5 +1,5 @@
 """
-Pirate scan for cve2012-1823.
+Pirate scan for cve2015-1427.
 
 Written by Max Hanson, Spring 2021 for my BSU Senior Project.
 """
@@ -7,31 +7,31 @@ Written by Max Hanson, Spring 2021 for my BSU Senior Project.
 import nmap
 
 
-class php_cgi:
+class elasticsearch:
     """
-    Scan object for cve2012-1823.
+    Scan object for cve2015-1427.
     """
 
-    name = "http-vuln-cve2015-1427"
-    desc = "Scans for a cve2012-1823."
+    name = "cve2015-1427"
+    desc = "Scans for a cve2015-1427."
     oses = "Windows"
 
     def scan(host_ip):
         """
-        Scan for cve2012-1823 with the Pirate Scan API.
+        Scan for cve2015-1427 with the Pirate Scan API.
 
         @param host_ip The ip address of the host to scan for the vulnerability
         """
 
         scanner = nmap.PortScanner()
-        scanner.scan(hosts=host_ip, arguments="--script http-vuln-cve2012-1823")
+        scanner.scan(hosts=host_ip, arguments="--script http-vuln-cve2015-1427")
 
         if not scanner.all_hosts():
             return ("Failure", "No hosts detected.")
 
         host = scanner.all_hosts()[0]
         if "hostscript" not in scanner[host].keys():
-            return ("Success", "Host is not vulnerable to cve2012-1823.")
+            return ("Success", "Host is not vulnerable to cve2015-1427.")
         else:
             nmap_output = scanner[host]["hostscript"][0]["output"]
-            return ("Failure", "Host is vulnerable to cve2012-1823.\n" + nmap_output)
+            return ("Failure", "Host is vulnerable to cve2015-1427.\n" + nmap_output)
