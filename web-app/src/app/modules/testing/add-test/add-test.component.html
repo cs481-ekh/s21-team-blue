@@ -1,4 +1,10 @@
+<p-toast position="top-center" key="tc"></p-toast>
+<p-dialog header="Uploading File" [(visible)]="loading">
+    <p>Uploading file. Please wait.</p>
+    <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner" strokeWidth="5" animationDuration=".9s"></p-progressSpinner>
+</p-dialog>
 <div class="content">
+    <i class="pi pi-home settings-icon" title="Home" [routerLink]="['/main']" style="font-size: 3rem;"></i>
     <h1>Adding your own tests to PiRate</h1>
     <p>The Raspberry Pi contains a suite of tests in the form of executable Python files, where each .py file contains a single test.</p>
     <p>To add your own test, follow the steps below:</p>
@@ -28,9 +34,20 @@
             </ol>
         </li>
         <li>
-            <em>NOTE:</em> All fields, along with the method argument and return values, must be of type <i>string</i>.
+            <em>NOTE:</em>
+            <ol>
+                <li>All fields, along with the method argument and return values, must be of type <i>string</i>.</li>
+                <li>If you upload a test and then are unable to run it or access the test list, there was a problem with the test format.<br>
+                    You will need to access the Pi and go to <code>/home/pi/pirate/controller/tests/</code> and edit or delete your test(s).</li>
+                <li><a (click)="saveTemplateFile()">Click here</a> to download a template that matches the format specified above.</li>
+            </ol>
         </li>
     </ul>
-    <p>Once you have the test in a Python file that matches the acceptable format, you can upload the file by clicking the "Upload" button below.</p>
-    <p-fileUpload mode="basic" chooseLabel="Upload" name="upload[]" accept=".py" customUpload="true" maxFileSize="1000000" (uploadHandler)="onUpload($event)" (onUpload)="onUpload($event)" [auto]="true"></p-fileUpload>
+    <p>Once you have the test in a Python file that matches the acceptable format, you can select and upload the file below.</p>
+    <div class="upload-selection">
+        <label class="button" for="upload">+ Browse</label>
+        <input id="upload" type="file" name="python-file" ng2FileSelect [uploader]="uploader" accept=".py" />
+        <span *ngIf="uploader.getNotUploadedItems().length > 0">{{uploader.queue[0].file.name}}</span>
+        <button pButton pRipple type="button" label="Upload" (click)="uploadFile()" [disabled]="!uploader.getNotUploadedItems().length"></button>
+    </div>
 </div>

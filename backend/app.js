@@ -3,10 +3,25 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var multer = require('multer');
 const RequestIp = require('@supercharge/request-ip');
+const TEST_PATH = '../controller/tests';
 
 var app = express();
 var ip;
+
+let storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, TEST_PATH);
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  }
+});
+
+let upload = multer({
+  storage: storage
+});
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -77,6 +92,23 @@ app.post('/api/run-tests', (req, res) => {
       res.send(results);
     }
   });
+});
+
+// Upload a test to the test directory
+// POST File
+app.post('/api/upload-test', upload.single('py'), function (req, res) {
+  if (!req.file) {
+    console.log("No file is available!");
+    return res.send({
+      success: false
+    });
+
+  } else {
+    console.log('File is available!');
+    return res.send({
+      success: true
+    })
+  }
 });
 
 app.all('/*', function(req, res, next) {
