@@ -26,6 +26,15 @@ export class  ApiService {
     .pipe(catchError(this.errorHandler));
   }
 
+  addTest(test: FormData): Observable<string> {
+    console.log(test);
+    return this.http.post<string>('/api/upload-test', {test}, {
+      reportProgress: true,
+      responseType: 'json'
+    })
+    .pipe(catchError(this.errorHandler));
+  }
+
   errorHandler(error: HttpErrorResponse) {
     return throwError(error);
   }

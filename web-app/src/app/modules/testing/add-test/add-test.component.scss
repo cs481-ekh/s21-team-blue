@@ -1,0 +1,104 @@
+.content {
+    margin: 150px 100px 100px 50px;
+    font-size: 18px;
+}
+
+.content .settings-icon {
+    position: absolute;
+    cursor: pointer;
+    left: 50px;
+    top: 50px;
+}
+
+:host ::ng-deep .p-button {
+    margin-left: 50px;
+}
+
+i {
+    margin-top: 5px;
+}
+
+i:hover {
+    cursor: pointer;
+    color: #5fb8ee;
+}
+
+a:hover {   
+    color: #5fb8ee;
+    cursor: pointer;
+}
+
+a {
+    color: #0ca4e6;
+}
+
+.container .upload-selection {
+    display: flex;
+    flex-direction: row;
+}
+
+.container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+}
+input[type="file"] {
+    display: none;
+}
+.button-wrap {
+    position: relative;
+}
+.button {
+    display: inline-block;
+    background-color: #0ca4e6;
+    border-radius: 4px;
+    border: 1px solid #0ca4e6;
+    color: #ffffff;
+    text-align: center;
+    font-size: 20px;
+    padding: 6px;
+    width: 100px;
+    transition: all 0.3s;
+    margin-right: 5px;
+    cursor: pointer;
+}
+.button:hover {
+    background-color: #065374;
+}
+
+:host ::ng-deep .custom-spinner .p-progress-spinner-circle {
+    animation: custom-progress-spinner-dash 1.5s ease-in-out infinite, custom-progress-spinner-color 6s ease-in-out infinite;
+}
+
+@keyframes custom-progress-spinner-color {
+    100%,
+    0% {
+        stroke: #159db8;
+    }
+    40% {
+        stroke: #67bed3;
+    }
+    66% {
+        stroke: #95d7e4;
+    }
+    80%,
+    90% {
+        stroke: #b0e7f2;
+    }
+}
+
+@keyframes custom-progress-spinner-dash {
+    0% {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -35px;
+    }
+    100% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -124px;
+    }
+}

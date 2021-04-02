@@ -16,6 +16,7 @@ import { ToastModule } from 'primeng/toast';
 import { DialogModule } from 'primeng/dialog';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { AccordionModule } from 'primeng/accordion';
 
 /**
  * All modules and components shared between all components across the site
@@ -45,6 +46,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     DialogModule,
     DynamicDialogModule,
     ConfirmDialogModule,
+    AccordionModule
   ]
 })
 export class SharedModule { }

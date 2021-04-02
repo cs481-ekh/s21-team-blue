@@ -36,6 +36,12 @@ export class TestingMainComponent implements OnInit {
 
   singleTestResult: TestResults;
   displayDialog: boolean = false;
+  testListError: boolean = false;
+  testExecutionError: boolean = false;
+  noTests: boolean = false;
+  errorMessage: string = "";
+  errorLong: string = "";
+  failedExec: boolean = false;
 
   constructor(private _dataService: DataService, private _apiService: ApiService, private dialogService: DialogService, 
     private confirmationService: ConfirmationService) { 
@@ -59,6 +65,13 @@ export class TestingMainComponent implements OnInit {
     this._apiService.getTestList().subscribe((response: Test[]) => {
       this.tests = response;
       this.displayTestArea = true;
+    },
+    (error) => {
+      this.errorMessage = error.message;
+      this.errorLong = error.error;
+      this.testListError = true;
+      this.noTests = true;
+      return;
     });
 
     var possibleOS = this._dataService.getOS();
@@ -133,6 +146,12 @@ export class TestingMainComponent implements OnInit {
       this._dataService.setTestResultsList(this.testResults);
       this.testsRun = true;
       this.resultView();
+    },
+    (error) => {
+      this.errorMessage = error.message;
+      this.errorLong = error.error;
+      this.testExecutionError = true;
+      this.failedExec = true;
     }); 
 
   }
@@ -143,6 +162,8 @@ export class TestingMainComponent implements OnInit {
    */
   testView(): void {
     this.resultsView = false;
+    this.loadingView = false;
+    this.testExecutionError = false;
     this.testsView = true;
     this.msg = [];
   }
@@ -155,6 +176,8 @@ export class TestingMainComponent implements OnInit {
   resultView(): void {
     this.testsView = false;
     this.loadingView = false;
+    this.testListError = false;
+    this.testExecutionError = false;
     this.resultsView = true;
     this.msg = [];
   }
