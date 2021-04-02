@@ -14,7 +14,7 @@ export class AddTestComponent implements OnInit {
   constructor(private _apiService: ApiService, private messageService: MessageService) { }
 
   public uploader: FileUploader = new FileUploader({
-    url: "http://localhost:3000/api/upload-test",
+    url: "/api/upload-test",
     itemAlias: 'py'
   });
 

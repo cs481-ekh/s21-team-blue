@@ -1,5 +1,6 @@
 var createError = require('http-errors');
 var express = require('express');
+var cors = require('cors');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -8,6 +9,7 @@ const RequestIp = require('@supercharge/request-ip');
 const TEST_PATH = '../controller/tests';
 
 var app = express();
+app.use(cors());
 var ip;
 
 let storage = multer.diskStorage({
