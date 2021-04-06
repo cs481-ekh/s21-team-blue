@@ -9,8 +9,6 @@ subprocess.run(["sudo", "apt", "install", "dnsutils", "-y"], stdout=subprocess.D
 subprocess.run(["sudo", "apt-get", "install", "python3.6", "-y"], stdout=subprocess.DEVNULL)
 subprocess.run(["sudo", "apt-get", "install", "nmap", "-y"], stdout=subprocess.DEVNULL)
 
-nvm = subprocess.Popen(["wget", "-qO-", "https://raw.githubusercontent.com/nvm-sh/nvm/v0.36.0/install.sh"], stdout=subprocess.PIPE)
-subprocess.run(["bash"], stdin=nvm.stdout, stdout=subprocess.DEVNULL)
 proc = "nvm install 15.10.0"
 run = subprocess.Popen(["/bin/bash", "-i", "-c", proc])
 run.communicate()

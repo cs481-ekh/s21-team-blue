@@ -112,13 +112,17 @@ if ! shopt -oq posix; then
   fi
 fi
 
+wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.36.0/install.sh | bash
+
 export NVM_DIR="$HOME/.config/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+source ~/.config/nvm/nvm.sh
 
 echo Building PiRate.net
 sudo iw dev wlan0 set power_save off
 sudo iw dev eth0 set power_save off
 ng analytics off
-sudo sh /home/pi/s21-team-blue/backend/serverscript.sh
+sudo python3 /home/pi/s21-team-blue/backend/serverscript.py
+echo PiRate.net started at: 192.168.0.202:3000
