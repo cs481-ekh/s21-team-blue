@@ -15,12 +15,10 @@ First: Move the `dhcpcd.conf` file into the /etc/ folder on the Pi, overwrite th
 
 Second: Move the `.bashrc` file into the /home/pi/ folder on the Pi, overwrite the old one in the folder
 
-Third: Move the `serverscript.sh` file into /home/pi/s21-team-blue/backend folder on the Pi, this needs to be the path for the script/project otherwise things break
+Third: Move the `serverscript.py` file into /home/pi/s21-team-blue/backend folder on the Pi, this needs to be the path for the script/project otherwise things break
 
 Fourth: That's it, now whenever you login, boot up the terminal, or ssh into the Pi it should automatically run the script and make sure everything is compiled for the program
 
 Optional: You can edit your hosts file to overwrite the IP for the Pi/Server to just autoconnect on a name like PiRate.net, location is: /etc/hosts for Mac/Linux/OsX, C:/windows/system32/drivers/etc/hosts for Windows.
 
 (If nothing has changed since you last booted up and you don't need to recompile everything just hit Ctrl+C in the terminal to exit out of the script and you can run things manually from there)
-
-(Still working on checks to see if all it needs to do is run and not compile and build everything)
