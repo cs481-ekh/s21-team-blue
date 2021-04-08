@@ -12,7 +12,7 @@ class php_cgi:
     Scan object for cve2012-1823.
     """
 
-    name = "http-vuln-cve2015-1427"
+    name = "http-vuln-cve2012-1823"
     desc = "Scans for a cve2012-1823."
     oses = "Windows"
 
