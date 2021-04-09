@@ -17,8 +17,6 @@ Second: Move the `.bashrc` file into the `/home/pi/` folder on the Pi, overwrite
 
 Third: Move the `serverscript.py` file into `/home/pi/s21-team-blue/backend` folder on the Pi, this needs to be the path for the script/project otherwise things break
 
-Fourht: Drag and drop (or copy over) the `dnsmasq.conf` file in `/backend` from the repository into: `/etc` on the RaspberryPi
-
 Finally: That's it, now whenever you login, boot up the terminal, or ssh into the Pi it should automatically run the script and make sure everything is compiled for the program
 
 Optional: You can edit your hosts file to overwrite the IP for the Pi/Server to just autoconnect on a name like PiRate.net, location is: `/etc/hosts` for Mac/Linux/OsX, `C:/windows/system32/drivers/etc/hosts` for Windows.
