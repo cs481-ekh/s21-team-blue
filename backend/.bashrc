@@ -112,10 +112,8 @@ if ! shopt -oq posix; then
   fi
 fi
 
-if ! command -v npm &> /dev/null
-then
-	curl -sL https://deb.nodesource.com/setup_15.x | sudo bash
-fi
+
+curl -sL https://deb.nodesource.com/setup_15.x | sudo bash
 sudo apt install nodejs
 sudo npm link @angular/cli
 
@@ -129,4 +127,5 @@ npm ci
 npm run pro-build
 cd /home/pi/s21-team-blue/backend
 npm ci
-npm start && echo "Server started at 192.168.0.202:3000"
+echo "Server starting at 192.168.0.202:3000"
+npm start
