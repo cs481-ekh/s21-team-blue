@@ -112,17 +112,21 @@ if ! shopt -oq posix; then
   fi
 fi
 
-wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.36.0/install.sh | bash
-
-export NVM_DIR="$HOME/.config/nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-source ~/.config/nvm/nvm.sh
+if ! command -v npm &> /dev/null
+then
+	curl -sL https://deb.nodesource.com/setup_15.x | sudo bash
+fi
+sudo apt install nodejs
+sudo npm link @angular/cli
 
 echo Building PiRate.net
 sudo iw dev wlan0 set power_save off
 sudo iw dev eth0 set power_save off
 ng analytics off
 sudo python3 /home/pi/s21-team-blue/backend/serverscript.py
-echo PiRate.net started at: 192.168.0.202:3000
+cd /home/pi/s21-team-blue/web-app
+npm ci
+npm run pro-build
+cd /home/pi/s21-team-blue/backend
+npm ci
+npm start && echo "Server started at 192.168.0.202:3000"
