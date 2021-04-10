@@ -127,5 +127,5 @@ npm ci
 npm run pro-build
 cd /home/pi/s21-team-blue/backend
 npm ci
-echo "Server starting at 192.168.0.202:3000"
+echo "Server starting at localhost:3000"
 npm start
