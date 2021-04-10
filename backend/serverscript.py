@@ -3,11 +3,12 @@ import subprocess
 
 subprocess.run(["sudo", "apt-get", "update", "-y"], stdout=subprocess.DEVNULL)
 subprocess.run(["sudo", "apt-get", "upgrade", "-y"], stdout=subprocess.DEVNULL)
+subprocess.run(["sudo", "apt-get", "install", "python3.6", "-y"], stdout=subprocess.DEVNULL)
+subprocess.run(["sudo", "apt-get", "install", "nmap", "-y"], stdout=subprocess.DEVNULL)
 subprocess.run(["sudo", "apt", "install", "dnsmasq", "-y"], stdout=subprocess.DEVNULL)
 subprocess.run(["sudo", "systemctl", "restart", "dnsmasq"], stdout=subprocess.DEVNULL)
 subprocess.run(["sudo", "apt", "install", "dnsutils", "-y"], stdout=subprocess.DEVNULL)
-subprocess.run(["sudo", "apt-get", "install", "python3.6", "-y"], stdout=subprocess.DEVNULL)
-subprocess.run(["sudo", "apt-get", "install", "nmap", "-y"], stdout=subprocess.DEVNULL)
+
 
 # proc = "nvm install 15.10.0"
 # run = subprocess.Popen(["/bin/bash", "-i", "-c", proc])
