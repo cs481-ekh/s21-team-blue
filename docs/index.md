@@ -1,20 +1,13 @@
-# Discord Music Bot
+# PiRate
 
 ## Abstract:
-Our project is a Discord bot based around utilizing APIs to rank the musical tastes of users in a Discord chat. It has two parts: a Spotify player inside of Discord, and an analyzer to generate the ranking data.
+PiRate is a standalone security system created and tested on a Raspberry Pi 3 device. The device connects to a client computer through a direct LAN connection (the client computer must be taken off all other networks). The client accesses the PiRate controller through a webpage served by PiRate. The controller UI allows the client to run a number of security tests, display and evaluate the results, and even create their own custom tests.
 
-The first part, the player, stores music played via the bot in an internal buffer. User-linked data is saved, including the YouTube like/dislike radio of the song’s music video and other discographic information. This part of the bot interfaces with Spotify’s API to get the songs to play and then with TheAudioDB to get the user-linked data. 
+Having a directly-connected LAN between the PiRate device and the client allows the PiRate software to safely emulate attack vectors and test security weaknesses of the client device, without exposing the either device to an internet-connected network. After a user runs a test or a set of tests, the results will be displayed in a table on the webpage. Users can then go through and delete any test results they don't want to keep, and save the remaining results to a file. 
 
-The second part, the analyzer, takes the like/dislike ratios and uses them to rate musical taste. When called, the bot displays tongue-in-cheek messages to the chat based on the generated rankings. For example, the user with the lowest ratio will be told they need better taste, while the person at the top is called a conformist.
-
-All generated ranking data is stored internally so it can be recalled and displayed to the users with various commands.
-We have considered adding push notifications for mobile devices to the bot as well, with a similar tongue-in-cheek style.
+PiRate can be beneficial for any researcher, engineer, or penetration tester desiring to run a fully-customizable testing framework for a single machine. Users can take advantage of the current testing suite while also having the ability to create and add any test they desire.
 
 ## Members:
- - Sean Mullarkey
- - Forrest Burt
- - Ben Harper
-
-## Project Demo:
-
-Coming soon
+ - Cole Gilmore
+ - Max Hanson
+ - Casey Lewis
